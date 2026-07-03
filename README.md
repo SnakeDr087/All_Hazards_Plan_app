@@ -6,7 +6,7 @@ Engineers, Property Managers, and Security at 5 Manhattan West (Brookfield Prope
 Single self-contained file: **`index.html`**. No build step, no backend, no dependencies
 (Google Fonts load from CDN; the app still works offline with system-font fallback).
 
-Current version: **v1.3.0**
+Current version: **v1.3.1**
 
 ---
 
@@ -92,6 +92,15 @@ Checklist tick state is stored separately in `localStorage['ahp-checklist']`.
 ---
 
 ## Changelog
+
+- **v1.3.1** — Genie natural-language tuning so common phrasings resolve: expanded the
+  stopword list so filler words ("how many", "used for", "lead to") stop diluting scores;
+  added concatenated name matching ("wholefoods" -> Whole Foods Market, "jpmorgan" -> JP
+  Morgan Chase); mapped street/ground/lobby to floor 1 so "what elevators lead to the street"
+  returns ground-serving banks; added a floor count to tenant answers ("Amazon - ... - 4
+  floors"); made "where is X" favor the tenant's location over individual people; and added an
+  exact-name boost so a bare tenant name outranks partial-name tenants (Amazon over
+  Weworks-Amazon). Freight/service treated as synonyms. Guarded by 5 new phrasing tests.
 
 - **v1.3.0** — Added **Ask the Plan** genie: an offline, deterministic question-answering
   layer over all plan content (incidents, roles, BIC, tenants, contacts). It returns stored

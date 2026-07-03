@@ -1272,7 +1272,7 @@
       <div>
         <div class="admin-user-label">Signed in as</div>
         <div class="admin-user-name">Administrator</div>
-        <div class="admin-version-stamp">AHP v1.3.0 · 2026-07-03</div>
+        <div class="admin-version-stamp">AHP v1.3.1 · 2026-07-03</div>
       </div>
       <button class="btn-danger" onclick="adminLogout()">Sign Out</button>
     </div>
@@ -3908,8 +3908,9 @@ function renderTenants(){
 // GENIE — deterministic, offline, cited, scored.
 // Returns stored field values verbatim. No generation, no external calls.
 // ─────────────────────────────────────────
-const GENIE_STOP = new Set(('a an the is are of for to in on at do i my we our you your what who where which how me '+
-  'can could should would please tell show give find get need there here that this it its and or').split(' '));
+const GENIE_STOP = new Set(('a an the is are was were be been being of for to in on at by with from into do does did done have has had '+
+  'i my we our you your what who where which how me many much used use using lead leads go goes get got need want know '+
+  'can could should would will please tell show give find there here that this it its and or as if about').split(' '));
 
 function genieTokens(str){
   return String(str||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(t => t && !GENIE_STOP.has(t));
@@ -3932,6 +3933,7 @@ function queryFloors(q){
   const ord = /\b(\d{1,2})(?:st|nd|rd|th)\b/g; let m;
   while((m = ord.exec(s))) out.add(+m[1]);
   if (ctx){ const bare = /\b(\d{1,2})\b/g; let b; while((b = bare.exec(s))){ const v=+b[1]; if(v>=1&&v<=16) out.add(v); } }
+  if (/\b(street|ground|grade|lobby|main|entrance)\b/.test(s)) out.add(1); // street/ground level = 1st
   return [...out];
 }
 
@@ -3992,21 +3994,26 @@ function buildGenieIndex(){
   const tenants = (d.sections && d.sections.tenants) || [];
   tenants.forEach(t => {
     const fl = parseFloors(t.floors, false);
-    add({ category:'tenant', intents:['tenant','building'], label:t.name+(t.floors?(' — '+t.floors):''),
-      value:t.name+(t.floors?('  ·  '+t.floors):'')+(t.store?('  ·  '+t.store):''),
+    const nameKey = t.name.toLowerCase().replace(/[^a-z0-9]/g,'');      // "wholefoodsmarket"
+    const nameCat = genieTokens(t.name).slice(0,2).join('');             // "wholefoods"
+    const nameExtra = ' '+nameKey+' '+nameCat;
+    const countStr = fl.length ? ('  ·  '+fl.length+' floor'+(fl.length>1?'s':'')) : '';
+    add({ category:'tenant', intents:['tenant','building'], nameKey, nameCat,
+      label:t.name+(t.floors?(' — '+t.floors):''),
+      value:t.name+(t.floors?('  ·  '+t.floors):'')+countStr+(t.store?('  ·  '+t.store):''),
       source:'Tenant Directory › '+t.name, floors:fl,
-      alias:t.name+' '+t.type+' '+(t.floors||'')+' tenant who is on floor occupant' });
+      alias:t.name+' '+t.type+' '+(t.floors||'')+' tenant occupant company located where who is on floor floors'+nameExtra });
     (t.contacts||[]).forEach(c => {
       const lines = [];
       if (c.office) lines.push('Office: '+c.office);
       if (c.emergency) lines.push('Emergency: '+c.emergency);
       if (c.email) lines.push('Email: '+c.email);
       if (!lines.length) return;
-      add({ category:'contact', intents:['personnel','contact','tenant'],
+      add({ category:'contact', intents:['personnel','contact','tenant'], nameKey, nameCat,
         label:(c.name||c.title||'Contact')+' · '+t.name+(t.floors?(' ('+t.floors+')'):''),
         value:lines.join('\n'), tel:(c.emergency||c.office||''), email:c.email||'',
         source:'Tenant Directory › '+t.name+' › '+(c.name||c.title||'Contact'), floors:fl,
-        alias:(c.name||'')+' '+(c.title||'')+' '+t.name+' '+(t.floors||'')+' who do i call contact number phone emergency reach' });
+        alias:(c.name||'')+' '+(c.title||'')+' '+t.name+' '+(t.floors||'')+' who do i call contact number phone emergency reach'+nameExtra });
     });
   });
 
@@ -4037,24 +4044,31 @@ function detectCompound(query){
   return { isCompound, comparison: cmp, clauses: parts.length > 1 ? parts : [q] };
 }
 
+const GENIE_SYN = { freight:['service','cargo'], service:['freight'], street:['ground','lobby'], ground:['street','lobby'], lobby:['street','ground'], restroom:['bathroom'], bathroom:['restroom'] };
 function scoreClause(clause, index){
   const qTokens = genieTokens(clause).map(normTok);
   if (!qTokens.length) return { results:[], qCount:0 };
+  const qJoined = qTokens.join('');
   const qFloors = queryFloors(clause);
   const intents = detectIntent(clause);
   const scored = index.map(r => {
     if (!r.tok) r.tok = new Set(genieTokens(r.blob).map(normTok));
-    const overlap = qTokens.filter(t => r.tok.has(t)).length;
+    const overlap = qTokens.filter(t => r.tok.has(t) || (GENIE_SYN[t]||[]).some(sy=>r.tok.has(normTok(sy)))).length;
     let raw = overlap / qTokens.length;
     if (qFloors.length && r.floors && r.floors.length){
       raw += r.floors.some(f => qFloors.includes(f)) ? 0.55 : -0.4;
+    }
+    // exact / prefix name match (tenant & tenant-contact records)
+    if (r.nameKey && qJoined && qJoined.length >= 3){
+      if (qJoined === r.nameKey || qJoined === r.nameCat || qTokens.includes(r.nameKey) || qTokens.includes(r.nameCat)) raw += 0.35;
+      else if (r.nameKey.includes(qJoined) || (r.nameCat && r.nameCat.includes(qJoined))) raw += 0.22;
     }
     let cb = 0;
     intents.forEach(i => {
       if (i === 'tenant')    cb += (r.category==='tenant'?0.30 : r.category==='contact'?0.15 : r.category==='building'?-0.15 : 0);
       if (i === 'personnel') cb += (r.category==='contact'?0.26 : r.category==='incident'?-0.22 : (r.category==='building'&&!r.tel)?-0.18 : 0);
       if (i === 'contact')   cb += (r.category==='contact'?0.16 : 0);
-      if (i === 'location')  cb += ((r.category==='building'||r.category==='contact')?0.14 : 0);
+      if (i === 'location')  cb += (r.category==='tenant'?0.18 : r.category==='building'?0.14 : r.category==='contact'?0.08 : 0);
       if (i === 'building')  cb += (r.category==='building'?0.20 : r.category==='tenant'?0.08 : 0);
       if (i === 'incident')  cb += (r.category==='incident'?0.30 : -0.08);
     });
