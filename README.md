@@ -6,7 +6,7 @@ Engineers, Property Managers, and Security at 5 Manhattan West (Brookfield Prope
 Single self-contained file: **`index.html`**. No build step, no backend, no dependencies
 (Google Fonts load from CDN; the app still works offline with system-font fallback).
 
-Current version: **v1.3.1**
+Current version: **v1.3.2**
 
 ---
 
@@ -92,6 +92,12 @@ Checklist tick state is stored separately in `localStorage['ahp-checklist']`.
 ---
 
 ## Changelog
+
+- **v1.3.2** — Fixed the genie suppressing valid floor-based answers: the refuse gate counted
+  only word matches, so "what stairways lead to street level" was rejected even though the right
+  stairs (serving 1st / discharging at W 31–33 St) had ranked. A floor match now counts as
+  evidence; "level" is treated as filler; and floor-1 / street-exit rows carry street/ground
+  vocabulary so "street" matches directly. Guarded by a new phrasing test.
 
 - **v1.3.1** — Genie natural-language tuning so common phrasings resolve: expanded the
   stopword list so filler words ("how many", "used for", "lead to") stop diluting scores;

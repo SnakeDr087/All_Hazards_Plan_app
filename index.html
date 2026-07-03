@@ -1272,7 +1272,7 @@
       <div>
         <div class="admin-user-label">Signed in as</div>
         <div class="admin-user-name">Administrator</div>
-        <div class="admin-version-stamp">AHP v1.3.1 · 2026-07-03</div>
+        <div class="admin-version-stamp">AHP v1.3.2 · 2026-07-03</div>
       </div>
       <button class="btn-danger" onclick="adminLogout()">Sign Out</button>
     </div>
@@ -3910,7 +3910,7 @@ function renderTenants(){
 // ─────────────────────────────────────────
 const GENIE_STOP = new Set(('a an the is are was were be been being of for to in on at by with from into do does did done have has had '+
   'i my we our you your what who where which how me many much used use using lead leads go goes get got need want know '+
-  'can could should would will please tell show give find there here that this it its and or as if about').split(' '));
+  'can could should would will please tell show give find there here that this it its and or as if about level').split(' '));
 
 function genieTokens(str){
   return String(str||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(t => t && !GENIE_STOP.has(t));
@@ -3977,14 +3977,17 @@ function buildGenieIndex(){
       if (/fire safety contact|contact/.test(gt)) intents = ['personnel','contact'];
       (g.rows||[]).forEach(row => {
         const phone = (String(row.value).match(/\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/)||[])[0] || null;
+        const flr = parseFloors(row.value, true);
         let struct = '';
         if (/elevator/.test(gt))       struct = ' elevator elevators bank serve serves serving floor floors which';
         else if (/stair/.test(gt))     struct = ' stair stairs stairway serve serves serving floor floors which';
         else if (/standpipe/.test(gt)) struct = ' standpipe serve serves floor floors';
+        if (struct && (flr.includes(1) || /\bw\s*\d+\s*st\b|street|grade/i.test(String(row.value))))
+          struct += ' street ground level exit curb outside discharge sidewalk';
         add({ category:(intents.includes('contact')?'contact':'building'), intents,
           label:row.label, value:row.value, tel:phone,
           source:'Building Info › '+g.title+' › '+row.label,
-          floors: parseFloors(row.value, true),
+          floors: flr,
           alias:g.title+' '+row.label+' '+row.value+' where location shutoff valve room'+struct });
       });
     });
@@ -4055,8 +4058,10 @@ function scoreClause(clause, index){
     if (!r.tok) r.tok = new Set(genieTokens(r.blob).map(normTok));
     const overlap = qTokens.filter(t => r.tok.has(t) || (GENIE_SYN[t]||[]).some(sy=>r.tok.has(normTok(sy)))).length;
     let raw = overlap / qTokens.length;
+    let floorHit = false;
     if (qFloors.length && r.floors && r.floors.length){
-      raw += r.floors.some(f => qFloors.includes(f)) ? 0.55 : -0.4;
+      floorHit = r.floors.some(f => qFloors.includes(f));
+      raw += floorHit ? 0.55 : -0.4;
     }
     // exact / prefix name match (tenant & tenant-contact records)
     if (r.nameKey && qJoined && qJoined.length >= 3){
@@ -4076,7 +4081,7 @@ function scoreClause(clause, index){
     const labelTok = new Set(genieTokens(r.label).map(normTok));
     if (qTokens.some(t => labelTok.has(t))) raw += 0.12;
     const score = Math.max(0, Math.min(100, Math.round(raw * 72)));
-    return { r, score, ov: overlap, raw };
+    return { r, score, ov: overlap, raw, floorHit };
   }).filter(x => x.raw > 0).sort((a,b)=> b.raw - a.raw);
   return { results: scored, qFloors, intents, qCount: qTokens.length };
 }
@@ -4107,7 +4112,7 @@ function genieAsk(qOverride){
 function answerOne(clause, index, isPart){
   const { results, qCount } = scoreClause(clause, index);
   const top = results[0];
-  if (!top || top.score < 30 || (top.ov < 2 && qCount >= 3)){
+  if (!top || top.score < 30 || (top.ov < 2 && !top.floorHit && qCount >= 3)){
     return `<div class="genie-nomatch">
       <div class="genie-nomatch-title">Not found in the plan</div>
       <div class="genie-nomatch-body">I don't have a confident answer for that in this plan, so I won't guess.<br>
