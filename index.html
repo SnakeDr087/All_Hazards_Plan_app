@@ -164,6 +164,75 @@
     .tcontact-lines a.emr { color: var(--red-400); }
     .tcontact-lines a.eml { color: #7eb3ff; font-family:'Inter',sans-serif; }
     .ref-section-head { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-500); padding: 6px 2px 8px; }
+    /* ── GENIE ── */
+    .genie-launch {
+      width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
+      background: linear-gradient(135deg, rgba(26,188,156,0.16), rgba(212,160,23,0.14));
+      border: 1.5px solid rgba(95,210,187,0.35); border-radius: var(--radius-lg);
+      padding: 14px 16px; margin-bottom: 14px; cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .genie-launch:active { transform: scale(0.99); border-color: var(--gold-400); }
+    .genie-launch-icon { font-size: 30px; flex-shrink: 0; }
+    .genie-launch-body { flex: 1; min-width: 0; }
+    .genie-launch-title { font-size: 16px; font-weight: 800; color: var(--white); }
+    .genie-launch-sub { font-size: 11px; color: var(--gray-200); margin-top: 2px; line-height: 1.35; }
+    .genie-launch-arrow { font-size: 22px; color: var(--gold-400); flex-shrink: 0; }
+    .genie-inputbar { display: flex; gap: 8px; }
+    .genie-input {
+      flex: 1; background: var(--navy-800); border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md); padding: 12px 14px; font-size: 15px; color: var(--white);
+      outline: none; transition: border-color var(--transition); -webkit-appearance: none;
+    }
+    .genie-input:focus { border-color: var(--gold-500); }
+    .genie-ask-btn {
+      flex-shrink: 0; background: var(--gold-500); color: var(--navy-950);
+      border: none; border-radius: var(--radius-md); padding: 0 18px; font-size: 14px;
+      font-weight: 800; cursor: pointer;
+    }
+    .genie-ask-btn:active { background: var(--gold-400); }
+    .genie-howto { background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-md); margin-top: 12px; overflow: hidden; }
+    .genie-howto-head { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; font-size: 12px; font-weight: 700; color: var(--gold-400); cursor: pointer; user-select: none; }
+    .genie-howto.open .genie-howto-head .ref-group-chev { transform: rotate(90deg); }
+    .genie-howto-body { display: none; padding: 0 14px 12px; }
+    .genie-howto.open .genie-howto-body { display: block; }
+    .genie-howto-list { margin: 0; padding-left: 18px; }
+    .genie-howto-list li { font-size: 12px; color: var(--gray-200); line-height: 1.55; margin-bottom: 6px; }
+    .genie-howto-list b { color: var(--white); }
+    .genie-chips-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); margin: 14px 0 8px; }
+    .genie-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .genie-chip {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.12); color: var(--gray-200);
+      border-radius: 20px; padding: 7px 12px; font-size: 12px; cursor: pointer; text-align: left;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .genie-chip:active { border-color: var(--gold-500); color: var(--gold-400); }
+    .genie-chip .gc-cat { font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-500); display: block; margin-bottom: 1px; }
+    .genie-qecho { font-size: 12px; color: var(--gray-400); margin: 16px 0 8px; }
+    .genie-qecho b { color: var(--gray-200); }
+    .genie-answer { background: var(--navy-800); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 13px 14px; margin-bottom: 10px; border-left: 3px solid var(--green-500); }
+    .genie-answer.med { border-left-color: var(--gold-500); }
+    .genie-answer.low { border-left-color: var(--red-500); }
+    .genie-answer-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .genie-answer-label { font-size: 12px; font-weight: 700; color: var(--gold-400); }
+    .genie-answer-value { font-size: 14px; color: var(--white); line-height: 1.55; white-space: pre-wrap; }
+    .genie-answer-value a { color: var(--gold-400); font-family: 'DM Mono', monospace; text-decoration: none; }
+    .genie-cite { font-size: 10.5px; color: var(--gray-400); margin-top: 9px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 5px; }
+    .genie-cite svg { width: 11px; height: 11px; flex-shrink: 0; opacity: 0.7; }
+    .rel-badge { flex-shrink: 0; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 20px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
+    .rel-badge.high { background: rgba(39,174,96,0.18); color: #6ee7a0; }
+    .rel-badge.med { background: rgba(212,160,23,0.18); color: var(--gold-400); }
+    .rel-badge.low { background: rgba(231,76,60,0.16); color: var(--red-400); }
+    .rel-reason { font-size: 10.5px; color: var(--gray-400); margin-top: 5px; font-style: italic; }
+    .genie-compound-banner { background: rgba(212,160,23,0.1); border: 1px solid rgba(212,160,23,0.3); border-radius: var(--radius-md); padding: 10px 13px; font-size: 12px; color: var(--gold-200,#f0d98f); line-height: 1.5; margin-bottom: 12px; }
+    .genie-alts { margin-top: 9px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .genie-alts-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-400); margin-bottom: 6px; }
+    .genie-alt-chip { display: inline-block; background: var(--navy-700); border: 1px solid rgba(255,255,255,0.1); color: var(--gray-200); border-radius: 16px; padding: 5px 10px; font-size: 11px; cursor: pointer; margin: 0 6px 6px 0; }
+    .genie-alt-chip:active { border-color: var(--gold-500); }
+    .genie-nomatch { background: var(--navy-800); border: 1px dashed rgba(231,76,60,0.4); border-radius: var(--radius-md); padding: 16px 14px; }
+    .genie-nomatch-title { font-size: 13px; font-weight: 700; color: var(--red-400); margin-bottom: 6px; }
+    .genie-nomatch-body { font-size: 12px; color: var(--gray-200); line-height: 1.6; }
+    .genie-footer-note { font-size: 10px; color: var(--gray-400); text-align: center; margin-top: 14px; line-height: 1.5; }
 
     /* ── INCIDENT LIST ── */
     .incident-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
@@ -654,6 +723,14 @@
       <div class="menu-hero-title">Emergency Response</div>
       <div class="menu-hero-sub" id="home-building-sub">Fire &amp; Life Safety — 5 Manhattan West</div>
     </div>
+    <button class="genie-launch" onclick="navigate('screen-genie'); genieFocus();">
+      <div class="genie-launch-icon">🧞</div>
+      <div class="genie-launch-body">
+        <div class="genie-launch-title">Ask the Plan</div>
+        <div class="genie-launch-sub">Location, personnel &amp; incident answers — from this plan only</div>
+      </div>
+      <div class="genie-launch-arrow">›</div>
+    </button>
     <div class="menu-grid">
       <button class="menu-tile primary" onclick="navigate('screen-incidents')">
         <div class="menu-tile-icon">🚨</div>
@@ -865,6 +942,49 @@
                placeholder="🔍  Filter by tenant, floor, or name…" oninput="renderTenants()" autocomplete="off" />
       </div>
       <div style="padding: 8px 16px 24px;" id="tenant-list-container"><!-- populated by JS --></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: GENIE (Ask the Plan)
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-genie">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">🧞 Ask the Plan</div>
+      <div class="screen-header-sub">Answers drawn only from this plan · no external AI · works offline</div>
+    </div>
+    <div class="scrollable">
+      <div style="padding: 14px 16px 4px;">
+        <div class="genie-inputbar">
+          <input class="genie-input" id="genie-input" type="text" inputmode="search"
+                 placeholder="Ask one thing… e.g. Who do I call for the 11th floor?"
+                 autocomplete="off"
+                 onkeydown="if(event.key==='Enter'){genieAsk();}" />
+          <button class="genie-ask-btn" onclick="genieAsk()">Ask</button>
+        </div>
+
+        <div class="genie-howto">
+          <div class="genie-howto-head" onclick="this.parentElement.classList.toggle('open')">
+            <span>💡 How to ask for the most reliable answer</span>
+            <span class="ref-group-chev">›</span>
+          </div>
+          <div class="genie-howto-body">
+            <ul class="genie-howto-list">
+              <li><b>Ask one thing at a time.</b> One question = one clean, cited answer. A long scenario with several parts is less reliable — break it into separate questions.</li>
+              <li><b>Use the floor number</b> for location/tenant questions — "11th floor", "floor 14".</li>
+              <li><b>Use a name or role</b> for people — "fire safety director", "Amazon contact".</li>
+              <li><b>Say what you want:</b> <i>who</i> to call, <i>where</i> something is, or the <i>steps</i> for an incident.</li>
+              <li>If it can't find it in the plan, it will say so rather than guess.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="genie-chips-label">Try one of these</div>
+        <div class="genie-chips" id="genie-chips"><!-- populated by JS --></div>
+      </div>
+
+      <div id="genie-results" style="padding: 6px 16px 28px;"><!-- answers render here --></div>
     </div>
   </div>
 
@@ -1152,7 +1272,7 @@
       <div>
         <div class="admin-user-label">Signed in as</div>
         <div class="admin-user-name">Administrator</div>
-        <div class="admin-version-stamp">AHP v1.2.1 · 2026-06-29</div>
+        <div class="admin-version-stamp">AHP v1.3.0 · 2026-07-03</div>
       </div>
       <button class="btn-danger" onclick="adminLogout()">Sign Out</button>
     </div>
@@ -3784,6 +3904,296 @@ function renderTenants(){
   cont.innerHTML = html;
 }
 
+// ─────────────────────────────────────────
+// GENIE — deterministic, offline, cited, scored.
+// Returns stored field values verbatim. No generation, no external calls.
+// ─────────────────────────────────────────
+const GENIE_STOP = new Set(('a an the is are of for to in on at do i my we our you your what who where which how me '+
+  'can could should would please tell show give find get need there here that this it its and or').split(' '));
+
+function genieTokens(str){
+  return String(str||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(t => t && !GENIE_STOP.has(t));
+}
+function parseFloors(str, expand){
+  const s = String(str||'').toLowerCase();
+  const out = new Set();
+  if (expand){
+    const rng = /(\d{1,2})\s*(?:st|nd|rd|th)?\s*[–\-]\s*(\d{1,2})/g; let m;
+    while((m = rng.exec(s))){ let a=+m[1], b=+m[2]; if(a<=b && b-a<=25){ for(let i=a;i<=b;i++) out.add(i); } }
+  }
+  const single = /\b(\d{1,3})\s*(?:st|nd|rd|th)?\b/g; let n;
+  while((n = single.exec(s))){ const v=+n[1]; if(v>=1 && v<=200) out.add(v); }
+  return [...out];
+}
+function queryFloors(q){
+  const s = q.toLowerCase();
+  const ctx = /(floor|fl\b|serve|serves|elevator|stair|standpipe|tenant|mezz)/.test(s);
+  const out = new Set();
+  const ord = /\b(\d{1,2})(?:st|nd|rd|th)\b/g; let m;
+  while((m = ord.exec(s))) out.add(+m[1]);
+  if (ctx){ const bare = /\b(\d{1,2})\b/g; let b; while((b = bare.exec(s))){ const v=+b[1]; if(v>=1&&v<=16) out.add(v); } }
+  return [...out];
+}
+
+function buildGenieIndex(){
+  const rec = [];
+  const floorWords = fl => fl && fl.length ? ' '+fl.map(n=>n+' '+n+'th').join(' ') : '';
+  const add = r => { r.blob = [r.label, r.source, r.value, (r.alias||''), floorWords(r.floors)].join(' ').toLowerCase(); rec.push(r); };
+  const d = appData;
+
+  // Incidents
+  Object.values(d.incidents || {}).forEach(inc => {
+    if (inc.definition) add({ category:'incident', intents:['incident'], label:inc.name+' — Definition',
+      value:inc.definition, source:'Incident › '+inc.name+' › Definition', floors:[],
+      alias:inc.name+' '+(inc.tagline||'')+' what is define about meaning' });
+    (inc.roles||[]).forEach(r => {
+      const steps = (r.actions||[]).map((a,i)=>`${i+1}. ${a.text}${a.critical?'  🚨 CRITICAL':''}`).join('\n');
+      if (steps) add({ category:'incident', intents:['incident'], label:inc.name+' — '+r.name+' steps',
+        value:steps, source:'Incident › '+inc.name+' › '+r.name+' response', floors:[],
+        alias:inc.name+' '+r.name+' steps procedure respond response actions what do i do protocol' });
+    });
+    (inc.announcements||[]).forEach(an => { if(an.script) add({ category:'incident', intents:['incident'],
+      label:inc.name+' — Announcement: '+an.title, value:an.script,
+      source:'Incident › '+inc.name+' › Announcement › '+an.title, floors:[],
+      alias:inc.name+' announcement announce pa script say' }); });
+    (inc.contacts||[]).forEach(c => { if(c.number) add({ category:'contact', intents:['personnel','contact'],
+      label:inc.name+' — '+c.label, value:c.number, tel:c.number,
+      source:'Incident › '+inc.name+' › Contact › '+c.label, floors:[],
+      alias:inc.name+' '+c.label+' call contact number phone reach dial' }); });
+  });
+
+  // BIC
+  const bic = (d.sections && d.sections.bic) || null;
+  if (bic){
+    if (bic.bin) add({ category:'building', intents:['building'], label:'BIN (Building ID Number)', value:bic.bin, source:'Building Info › BIN', floors:[], alias:'bin building identification number' });
+    if (bic.address) add({ category:'building', intents:['building','location'], label:'Building Address', value:bic.address, source:'Building Info › Address', floors:[], alias:'address location where building' });
+    (bic.groups||[]).forEach(g => {
+      const gt = g.title.toLowerCase();
+      let intents = ['building'];
+      if (/util|hazard|fire protection|ventil/.test(gt)) intents = ['location','building'];
+      if (/stair|elevator|standpipe/.test(gt)) intents = ['building','location'];
+      if (/fire safety contact|contact/.test(gt)) intents = ['personnel','contact'];
+      (g.rows||[]).forEach(row => {
+        const phone = (String(row.value).match(/\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/)||[])[0] || null;
+        let struct = '';
+        if (/elevator/.test(gt))       struct = ' elevator elevators bank serve serves serving floor floors which';
+        else if (/stair/.test(gt))     struct = ' stair stairs stairway serve serves serving floor floors which';
+        else if (/standpipe/.test(gt)) struct = ' standpipe serve serves floor floors';
+        add({ category:(intents.includes('contact')?'contact':'building'), intents,
+          label:row.label, value:row.value, tel:phone,
+          source:'Building Info › '+g.title+' › '+row.label,
+          floors: parseFloors(row.value, true),
+          alias:g.title+' '+row.label+' '+row.value+' where location shutoff valve room'+struct });
+      });
+    });
+  }
+
+  // Tenants
+  const tenants = (d.sections && d.sections.tenants) || [];
+  tenants.forEach(t => {
+    const fl = parseFloors(t.floors, false);
+    add({ category:'tenant', intents:['tenant','building'], label:t.name+(t.floors?(' — '+t.floors):''),
+      value:t.name+(t.floors?('  ·  '+t.floors):'')+(t.store?('  ·  '+t.store):''),
+      source:'Tenant Directory › '+t.name, floors:fl,
+      alias:t.name+' '+t.type+' '+(t.floors||'')+' tenant who is on floor occupant' });
+    (t.contacts||[]).forEach(c => {
+      const lines = [];
+      if (c.office) lines.push('Office: '+c.office);
+      if (c.emergency) lines.push('Emergency: '+c.emergency);
+      if (c.email) lines.push('Email: '+c.email);
+      if (!lines.length) return;
+      add({ category:'contact', intents:['personnel','contact','tenant'],
+        label:(c.name||c.title||'Contact')+' · '+t.name+(t.floors?(' ('+t.floors+')'):''),
+        value:lines.join('\n'), tel:(c.emergency||c.office||''), email:c.email||'',
+        source:'Tenant Directory › '+t.name+' › '+(c.name||c.title||'Contact'), floors:fl,
+        alias:(c.name||'')+' '+(c.title||'')+' '+t.name+' '+(t.floors||'')+' who do i call contact number phone emergency reach' });
+    });
+  });
+
+  return rec;
+}
+
+function detectIntent(raw){
+  const s = ' '+String(raw||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ')+' ';
+  const it = new Set();
+  const struct = / (which|elevator|elevators|stair|stairway|stairs|standpipe|serve|serves|serving) /.test(s);
+  if (/ (who|whom|call|contact|number|phone|reach|dial|manager|director|engineer|security|person|people) /.test(s)) { it.add('personnel'); it.add('contact'); }
+  if (/ (where|location|located|shutoff|shut|valve|room|find|address) /.test(s)) it.add('location');
+  if (/ (step|steps|procedure|respond|response|protocol|action|actions|handle|entrapment|evacuate) /.test(s)) it.add('incident');
+  if (struct) it.add('building');
+  if (/ (tenant|tenants|occupant|occupies|company) /.test(s)) it.add('tenant');
+  if (/ floor /.test(s) && !struct) it.add('tenant');
+  if (/ who is on | whos on /.test(s)) it.add('tenant');
+  return it;
+}
+function normTok(t){ return t.length > 3 && t.endsWith('s') ? t.slice(0,-1) : t; }
+
+function detectCompound(query){
+  const q = query.trim();
+  const cmp = /\b(compare|comparison|versus|vs\.?|difference|differ|between)\b/i.test(q);
+  const parts = q.split(/\s*(?:\band\b|;|\bthen\b|\balso\b|\bplus\b|\bas well as\b)\s*|\?\s*/i)
+                 .map(p => p.trim()).filter(p => genieTokens(p).length >= 1);
+  const isCompound = cmp || parts.length > 1;
+  return { isCompound, comparison: cmp, clauses: parts.length > 1 ? parts : [q] };
+}
+
+function scoreClause(clause, index){
+  const qTokens = genieTokens(clause).map(normTok);
+  if (!qTokens.length) return { results:[], qCount:0 };
+  const qFloors = queryFloors(clause);
+  const intents = detectIntent(clause);
+  const scored = index.map(r => {
+    if (!r.tok) r.tok = new Set(genieTokens(r.blob).map(normTok));
+    const overlap = qTokens.filter(t => r.tok.has(t)).length;
+    let raw = overlap / qTokens.length;
+    if (qFloors.length && r.floors && r.floors.length){
+      raw += r.floors.some(f => qFloors.includes(f)) ? 0.55 : -0.4;
+    }
+    let cb = 0;
+    intents.forEach(i => {
+      if (i === 'tenant')    cb += (r.category==='tenant'?0.30 : r.category==='contact'?0.15 : r.category==='building'?-0.15 : 0);
+      if (i === 'personnel') cb += (r.category==='contact'?0.26 : r.category==='incident'?-0.22 : (r.category==='building'&&!r.tel)?-0.18 : 0);
+      if (i === 'contact')   cb += (r.category==='contact'?0.16 : 0);
+      if (i === 'location')  cb += ((r.category==='building'||r.category==='contact')?0.14 : 0);
+      if (i === 'building')  cb += (r.category==='building'?0.20 : r.category==='tenant'?0.08 : 0);
+      if (i === 'incident')  cb += (r.category==='incident'?0.30 : -0.08);
+    });
+    raw += Math.max(-0.5, Math.min(0.7, cb));
+    const labelTok = new Set(genieTokens(r.label).map(normTok));
+    if (qTokens.some(t => labelTok.has(t))) raw += 0.12;
+    const score = Math.max(0, Math.min(100, Math.round(raw * 72)));
+    return { r, score, ov: overlap, raw };
+  }).filter(x => x.raw > 0).sort((a,b)=> b.raw - a.raw);
+  return { results: scored, qFloors, intents, qCount: qTokens.length };
+}
+
+function genieAsk(qOverride){
+  const input = document.getElementById('genie-input');
+  const query = (qOverride != null ? qOverride : input.value).trim();
+  if (qOverride != null) input.value = query;
+  const out = document.getElementById('genie-results');
+  if (!query){ out.innerHTML = ''; return; }
+  const index = buildGenieIndex();
+  const comp = detectCompound(query);
+  let html = `<div class="genie-qecho">You asked: <b>${escHtml(query)}</b></div>`;
+
+  if (comp.isCompound){
+    html += `<div class="genie-compound-banner">⚠️ This looks like ${comp.comparison ? 'a comparison / multi-part question' : comp.clauses.length+' questions in one'}. `+
+            `The Plan is most reliable one question at a time, so each part is answered separately below`+
+            `${comp.comparison ? ' — it looks up facts but does not compare them for you.' : '.'}</div>`;
+    comp.clauses.forEach((cl, i) => { html += `<div class="genie-qecho" style="margin-top:14px;">Part ${i+1}: <b>${escHtml(cl)}</b></div>` + answerOne(cl, index, true); });
+  } else {
+    html += answerOne(query, index, false);
+  }
+  html += `<div class="genie-footer-note">Every answer above is a value stored in this plan, shown with its source. No external AI · nothing invented · works offline.</div>`;
+  out.innerHTML = html;
+  if (out.scrollIntoView) out.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function answerOne(clause, index, isPart){
+  const { results, qCount } = scoreClause(clause, index);
+  const top = results[0];
+  if (!top || top.score < 30 || (top.ov < 2 && qCount >= 3)){
+    return `<div class="genie-nomatch">
+      <div class="genie-nomatch-title">Not found in the plan</div>
+      <div class="genie-nomatch-body">I don't have a confident answer for that in this plan, so I won't guess.<br>
+      Try asking one specific thing — a <b>floor number</b>, a <b>name/role</b>, a <b>location</b> (e.g. "gas shutoff"), or incident <b>steps</b>. Use the example questions above.</div>
+    </div>`;
+  }
+  const near = results.filter(x => top.score - x.score <= 8).length; // how many cluster at the top
+  let tier;
+  if (near >= 4)      tier = 'low';
+  else if (near >= 2) tier = top.score >= 50 ? 'med' : 'low';
+  else                tier = top.score >= 72 ? 'high' : (top.score >= 50 ? 'med' : 'low');
+  const r = top.r;
+  const badgeText = { high:'High', med:'Medium', low:'Low — verify' }[tier];
+  let reason;
+  if (tier === 'high')     reason = 'Matched a single, specific field in the plan.';
+  else if (near >= 4)      reason = 'Many records matched about equally — narrow your question; showing the closest.';
+  else if (near >= 2)      reason = 'A few records matched closely — showing the best; check the alternatives.';
+  else if (tier === 'med') reason = 'Reasonable match — confirm against the cited source.';
+  else                     reason = 'Weak match — treat as a lead only and verify in the cited source.';
+
+  // alternatives
+  let altHtml = '';
+  const alts = results.slice(1, 4).filter(x => x.score >= 30);
+  if (tier !== 'high' && alts.length){
+    altHtml = `<div class="genie-alts"><div class="genie-alts-label">Other possible matches</div>` +
+      alts.map(a => `<span class="genie-alt-chip" onclick="genieShowRecord('${a.r.source.replace(/'/g,"\\'")}')">${escHtml(a.r.label)}</span>`).join('') +
+      `</div>`;
+  }
+  return renderRecordCard(r, tier, badgeText, reason, altHtml, top.score);
+}
+
+function renderRecordCard(r, tier, badgeText, reason, altHtml, score){
+  const cls = tier === 'high' ? '' : (tier === 'med' ? 'med' : 'low');
+  return `<div class="genie-answer ${cls}">
+    <div class="genie-answer-top">
+      <div class="genie-answer-label">${escHtml(r.label)}</div>
+      <div class="rel-badge ${tier}">${badgeText}${score!=null?' · '+score+'%':''}</div>
+    </div>
+    <div class="genie-answer-value">${linkifyValue(r.value)}</div>
+    <div class="rel-reason">${escHtml(reason)}</div>
+    <div class="genie-cite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Source: ${escHtml(r.source)}
+    </div>
+    ${altHtml}
+  </div>`;
+}
+
+function genieShowRecord(source){
+  const index = buildGenieIndex();
+  const r = index.find(x => x.source === source);
+  if (!r) return;
+  const out = document.getElementById('genie-results');
+  out.insertAdjacentHTML('beforeend', renderRecordCard(r, 'med', 'Selected', 'You opened this from the alternatives.', '', null));
+}
+
+const GENIE_CHIPS = [
+  { cat:'Personnel', q:'Fire safety director number' },
+  { cat:'Personnel', q:'Who do I call for the 11th floor?' },
+  { cat:'Location',  q:'Where is the gas shutoff?' },
+  { cat:'Location',  q:'Where are the standpipes?' },
+  { cat:'Building',  q:'Which elevators serve the 14th floor?' },
+  { cat:'Incident',  q:'Elevator entrapment steps' },
+  { cat:'Tenants',   q:'Amazon contact' },
+  { cat:'Tenants',   q:'Who is on the 5th floor?' },
+];
+function renderGenieChips(){
+  const el = document.getElementById('genie-chips');
+  if (!el) return;
+  el.innerHTML = GENIE_CHIPS.map(c =>
+    `<button class="genie-chip" onclick="genieAsk('${c.q.replace(/'/g,"\\'")}')"><span class="gc-cat">${c.cat}</span>${escHtml(c.q)}</button>`
+  ).join('');
+}
+function genieFocus(){
+  renderGenieChips();
+  setTimeout(()=>{ const i=document.getElementById('genie-input'); if(i) i.focus(); }, 120);
+}
+
+// Remote sync hook (designed-in; inert until a published data URL is set).
+// Set REMOTE_DATA_URL to a JSON endpoint that returns the same shape as an
+// Admin JSON export. When online it refreshes and caches; offline it uses the
+// last-known-good localStorage copy. Genie always answers from cached content.
+const REMOTE_DATA_URL = '';
+async function genieSyncRemote(){
+  if (!REMOTE_DATA_URL) return;
+  try {
+    if (navigator.onLine){
+      const res = await fetch(REMOTE_DATA_URL, { cache:'no-store' });
+      const remote = await res.json();
+      if (remote && remote.incidents){
+        appData.buildingName = remote.buildingName || appData.buildingName;
+        appData.incidents = remote.incidents;
+        appData.sections  = remote.sections || appData.sections || {};
+        saveData();
+        renderIncidentList(); updatePlaceholderScreens();
+      }
+    }
+  } catch(e) { /* offline or fetch failed → keep last-known-good */ }
+}
+
 function updatePlaceholderScreens() {
   const s = appData.sections || {};
 
@@ -3878,6 +4288,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Admin views — av-home starts active via HTML class, others hidden via CSS
   updatePlaceholderScreens();
+  renderGenieChips();
+  genieSyncRemote();
 });
 </script>
 </body>

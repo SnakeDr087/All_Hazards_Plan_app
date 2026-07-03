@@ -6,7 +6,7 @@ Engineers, Property Managers, and Security at 5 Manhattan West (Brookfield Prope
 Single self-contained file: **`index.html`**. No build step, no backend, no dependencies
 (Google Fonts load from CDN; the app still works offline with system-font fallback).
 
-Current version: **v1.2.1**
+Current version: **v1.3.0**
 
 ---
 
@@ -92,6 +92,16 @@ Checklist tick state is stored separately in `localStorage['ahp-checklist']`.
 ---
 
 ## Changelog
+
+- **v1.3.0** — Added **Ask the Plan** genie: an offline, deterministic question-answering
+  layer over all plan content (incidents, roles, BIC, tenants, contacts). It returns stored
+  values **verbatim**, shows a **source citation** for every answer, and attaches a **reliability
+  score (0-100) + tier** (High/Medium/Low). It **detects compound/comparison questions** and
+  answers each part separately, surfaces **how-to-ask hints** and starter chips, and **refuses
+  rather than guesses** when confidence is low. No external AI, no network calls, no prompt to
+  inject — answers can only come from this plan's data. A documented, inert-by-default
+  `REMOTE_DATA_URL` sync hook is included so content can auto-refresh when online while staying
+  fully usable offline (last-known-good).
 
 - **v1.2.1** — Hardcoded admin credentials; removed plaintext hint from login screen.
 - **v1.2.0** — Added FDNY Building Information Card (structured, readable) and Tenant
