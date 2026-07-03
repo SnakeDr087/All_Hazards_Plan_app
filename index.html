@@ -1,0 +1,3884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0a1628" />
+  <title>All Hazard Plan — 5 Manhattan West</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy-950: #06111f;
+      --navy-900: #0a1628;
+      --navy-800: #0f2040;
+      --navy-700: #1a3258;
+      --navy-600: #234070;
+      --gold-400: #f5c842;
+      --gold-500: #d4a017;
+      --gold-600: #b8860b;
+      --red-600: #c0392b;
+      --red-500: #e74c3c;
+      --red-400: #ff6b5b;
+      --white: #ffffff;
+      --gray-200: #d8dce8;
+      --gray-400: #8892a4;
+      --green-600: #1a6b3a;
+      --green-500: #27ae60;
+      --green-400: #2ecc71;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --transition: 200ms cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+    input, textarea, select { font-family: inherit; }
+
+    /* ── APP SHELL ── */
+    #app { display: flex; flex-direction: column; min-height: 100dvh; max-width: 480px; margin: 0 auto; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy-950);
+      border-bottom: 2px solid var(--gold-500);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px; height: 52px; gap: 8px;
+    }
+    .top-bar-logo { display: flex; align-items: center; gap: 8px; flex: 1; }
+    .top-bar-logo svg { width: 28px; height: 28px; flex-shrink: 0; }
+    .top-bar-title { font-size: 12px; font-weight: 700; color: var(--gold-400); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.2; }
+    .top-bar-subtitle { font-size: 10px; font-weight: 500; color: var(--gray-400); }
+    .top-bar-actions { display: flex; gap: 6px; align-items: center; }
+    .top-bar-logo > div { min-width: 0; }
+    .top-bar-title, .top-bar-subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .profile-info { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.25; text-align: right; flex-shrink: 0; }
+    .profile-role { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-400); }
+    .profile-name { font-size: 11px; font-weight: 700; color: var(--white); white-space: nowrap; }
+    .profile-phone { font-size: 11px; font-weight: 600; color: var(--gold-400); font-family: 'DM Mono', monospace; text-decoration: none; white-space: nowrap; }
+    .btn-icon {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--navy-800); color: var(--gray-200);
+      transition: background var(--transition);
+    }
+    .btn-icon:active { background: var(--navy-700); }
+
+    /* ── SCREENS ── */
+    .screen { display: none; flex-direction: column; flex: 1; }
+    .screen.active { display: flex; }
+    .scrollable { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+
+    /* ── SCREEN HEADER ── */
+    .screen-header { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .screen-header-title { font-size: 18px; font-weight: 800; }
+    .screen-header-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: var(--gold-400);
+      padding: 6px 0; margin-bottom: 2px;
+    }
+    .back-btn svg { width: 16px; height: 16px; }
+
+    /* ── MAIN MENU ── */
+    .menu-hero {
+      background: linear-gradient(160deg, var(--navy-800) 0%, var(--navy-950) 100%);
+      padding: 24px 16px 20px; text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .menu-hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(212,160,23,0.15); border: 1px solid rgba(212,160,23,0.4);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 600; color: var(--gold-400);
+      letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .menu-hero-title { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; }
+    .menu-hero-sub { font-size: 13px; color: var(--gray-400); margin-top: 4px; }
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; }
+    .menu-tile {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 18px 12px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; text-align: center; min-height: 130px;
+      transition: background var(--transition), transform var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .menu-tile:active { transform: scale(0.97); background: var(--navy-700); }
+    .menu-tile-icon {
+      width: 48px; height: 48px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .menu-tile-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.3; }
+    .menu-tile-desc { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
+    .menu-tile.primary .menu-tile-icon { background: rgba(192,57,43,0.2); color: var(--red-400); }
+    .menu-tile.secondary .menu-tile-icon { background: rgba(212,160,23,0.15); color: var(--gold-400); }
+    .menu-tile.green .menu-tile-icon { background: rgba(39,174,96,0.15); color: var(--green-400); }
+    .menu-tile.blue .menu-tile-icon { background: rgba(46,81,144,0.3); color: #7eb3ff; }
+    .menu-tile.orange .menu-tile-icon { background: rgba(224,123,0,0.15); color: #ffb347; }
+    .menu-tile.purple .menu-tile-icon { background: rgba(142,68,173,0.2); color: #c39bd3; }
+    .menu-tile.teal .menu-tile-icon { background: rgba(26,188,156,0.18); color: #5fd2bb; }
+    /* BIC + Tenant readable display */
+    .ref-meta { background: var(--navy-800); border:1px solid rgba(255,255,255,0.07); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 12px; }
+    .ref-meta-name { font-size: 16px; font-weight: 800; color: var(--white); }
+    .ref-meta-line { font-size: 12px; color: var(--gray-400); margin-top: 3px; }
+    .ref-group { background: var(--navy-800); border:1px solid rgba(255,255,255,0.07); border-radius: var(--radius-md); margin-bottom: 10px; overflow: hidden; }
+    .ref-group-head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding: 13px 14px; cursor: pointer; user-select:none; }
+    .ref-group-title { font-size: 13px; font-weight: 700; color: var(--gold-400); text-transform: uppercase; letter-spacing: 0.04em; }
+    .ref-group-chev { color: var(--gray-400); transition: transform var(--transition); font-size: 13px; }
+    .ref-group.open .ref-group-chev { transform: rotate(90deg); }
+    .ref-group-body { display:none; padding: 0 14px 8px; }
+    .ref-group.open .ref-group-body { display:block; }
+    .ref-row { display:flex; flex-direction:column; gap:2px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+    .ref-row-label { font-size: 12px; font-weight: 600; color: var(--gray-200); }
+    .ref-row-value { font-size: 13px; color: var(--white); line-height: 1.5; }
+    .ref-row-value a { color: var(--gold-400); font-family:'DM Mono',monospace; text-decoration: none; }
+    .tenant-card { background: var(--navy-800); border:1px solid rgba(255,255,255,0.07); border-radius: var(--radius-md); margin-bottom: 10px; overflow:hidden; }
+    .tenant-head { display:flex; align-items:center; justify-content:space-between; gap:10px; padding: 13px 14px; cursor:pointer; user-select:none; }
+    .tenant-name { font-size: 14px; font-weight: 800; color: var(--white); }
+    .tenant-floor { font-size: 11px; color: var(--navy-900); background: var(--gold-400); padding: 2px 8px; border-radius: 20px; font-weight:700; white-space:nowrap; }
+    .tenant-store { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .tenant-body { display:none; padding: 0 14px 10px; }
+    .tenant-card.open .tenant-body { display:block; }
+    .tenant-card.open .tenant-head .ref-group-chev { transform: rotate(90deg); }
+    .tcontact { padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+    .tcontact-name { font-size: 13px; font-weight: 700; color: var(--white); }
+    .tcontact-title { font-size: 11px; color: var(--gray-400); }
+    .tcontact-lines { display:flex; flex-wrap:wrap; gap: 6px 14px; margin-top: 5px; }
+    .tcontact-lines a { font-size: 12px; color: var(--gold-400); font-family:'DM Mono',monospace; text-decoration:none; white-space:nowrap; }
+    .tcontact-lines a.emr { color: var(--red-400); }
+    .tcontact-lines a.eml { color: #7eb3ff; font-family:'Inter',sans-serif; }
+    .ref-section-head { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-500); padding: 6px 2px 8px; }
+
+    /* ── INCIDENT LIST ── */
+    .incident-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .incident-card {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); padding: 14px 16px;
+      display: flex; align-items: center; gap: 14px; width: 100%;
+      transition: background var(--transition);
+    }
+    .incident-card:active { background: var(--navy-700); }
+    .incident-card-icon {
+      width: 42px; height: 42px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .incident-card-body { flex: 1; text-align: left; }
+    .incident-card-name { font-size: 14px; font-weight: 700; }
+    .incident-card-desc { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .incident-card-arrow { color: var(--gray-400); font-size: 20px; }
+    .empty-placeholder {
+      border: 1px dashed rgba(212,160,23,0.3); border-radius: var(--radius-sm);
+      padding: 14px; text-align: center; font-size: 11px; color: var(--gold-500);
+    }
+
+    /* ── INCIDENT DETAIL ── */
+    .incident-banner {
+      background: linear-gradient(135deg, var(--red-600), #8b1a10);
+      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .incident-banner-icon { font-size: 22px; flex-shrink: 0; }
+    .incident-banner-name { font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+    .incident-banner-tagline { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .close-btn { flex-shrink: 0; font-size: 20px; color: rgba(255,255,255,0.6); padding: 4px; }
+
+    .detail-section {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .detail-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--gold-500); margin-bottom: 6px;
+    }
+    .detail-section-text { font-size: 13px; color: var(--gray-200); line-height: 1.6; }
+    .detail-section-text strong { color: var(--white); font-weight: 700; }
+
+    .announcement-box {
+      background: rgba(46,81,144,0.15); border: 1px solid rgba(46,81,144,0.3);
+      border-radius: var(--radius-sm); padding: 12px; margin-bottom: 8px;
+    }
+    .announcement-label { font-size: 10px; font-weight: 700; color: #7eb3ff; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .announcement-script { font-size: 13px; color: var(--gray-200); line-height: 1.7; font-style: italic; }
+    .no-announce {
+      padding: 10px 12px; background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-sm); font-size: 12px; color: var(--gray-400);
+      text-align: center; font-weight: 600;
+    }
+
+    /* Role accordion */
+    .role-accordion { padding: 10px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .role-block {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .role-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px; cursor: pointer;
+      transition: background var(--transition);
+    }
+    .role-block-header:active { background: var(--navy-700); }
+    .role-block-left { display: flex; align-items: center; gap: 10px; }
+    .role-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .role-block-name { font-size: 14px; font-weight: 700; }
+    .role-block-count { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .role-chevron { color: var(--gray-400); font-size: 18px; transition: transform var(--transition); }
+    .role-chevron.open { transform: rotate(90deg); }
+
+    .role-actions { display: none; border-top: 1px solid rgba(255,255,255,0.06); }
+    .role-actions.open { display: block; }
+
+    /* Progress strip inside role */
+    .role-progress-strip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .progress-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--green-500); border-radius: 2px; transition: width 400ms ease; }
+    .progress-label { font-size: 10px; font-weight: 700; color: var(--gray-400); white-space: nowrap; }
+
+    /* Action steps */
+    .action-step {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background var(--transition);
+    }
+    .action-step:last-child { border-bottom: none; }
+    .action-step.completed { background: rgba(39,174,96,0.04); }
+    .action-step-main { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; }
+    .step-cb {
+      width: 22px; height: 22px; border-radius: 5px;
+      border: 2px solid rgba(255,255,255,0.2); flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+    .step-cb.checked { background: var(--green-500); border-color: var(--green-500); }
+    .step-cb svg { width: 12px; height: 12px; opacity: 0; transition: opacity var(--transition); }
+    .step-cb.checked svg { opacity: 1; }
+
+    .step-content { flex: 1; }
+    .step-num { font-size: 10px; font-weight: 700; color: var(--gold-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+    .step-text { font-size: 13px; font-weight: 600; color: var(--white); line-height: 1.5; }
+    .step-text.danger { color: var(--red-400); }
+    .action-step.completed .step-text { color: var(--gray-400); text-decoration: line-through; text-decoration-color: var(--green-500); }
+    .action-step.critical { border-left: 3px solid var(--red-500); }
+
+    .step-expand {
+      padding: 0 14px 10px; display: flex; align-items: center;
+      gap: 5px; font-size: 10px; font-weight: 700; color: var(--gray-400);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .step-expand svg { width: 12px; height: 12px; transition: transform var(--transition); }
+    .step-expand.open svg { transform: rotate(180deg); }
+    .step-detail {
+      display: none; padding: 0 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .step-detail.open { display: block; }
+    .step-detail-row { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .step-detail-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .step-detail-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gold-500); margin-bottom: 3px; }
+    .step-detail-text { font-size: 12px; color: var(--gray-200); line-height: 1.6; }
+    .step-detail-text a { color: var(--gold-400); font-weight: 700; }
+
+    /* Quick contacts */
+    .contact-bar { background: var(--navy-950); border-top: 1px solid rgba(255,255,255,0.06); padding: 12px 16px; }
+    .contact-bar-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); margin-bottom: 8px; }
+    .contact-list { display: flex; flex-direction: column; gap: 6px; }
+    .contact-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px; background: var(--navy-800); border-radius: var(--radius-sm); gap: 10px;
+    }
+    .contact-item-label { font-size: 12px; font-weight: 600; color: var(--gray-200); }
+    .contact-item-num { font-size: 13px; font-weight: 700; color: var(--gold-400); font-family: var(--font-mono); text-decoration: none; }
+    .contact-item-num.emergency { color: var(--red-400); }
+
+    /* ── PLACEHOLDER SCREENS ── */
+    .placeholder-content {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 40px 24px; text-align: center; gap: 12px;
+    }
+    .placeholder-content.filled {
+      justify-content: flex-start; align-items: stretch; text-align: left;
+      overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px; gap: 0;
+    }
+    .placeholder-icon { font-size: 48px; opacity: 0.4; }
+    .placeholder-title { font-size: 18px; font-weight: 700; }
+    .placeholder-text { font-size: 13px; color: var(--gray-400); line-height: 1.6; max-width: 280px; }
+    .placeholder-admin-note {
+      padding: 8px 16px; background: rgba(212,160,23,0.1);
+      border: 1px solid rgba(212,160,23,0.3); border-radius: var(--radius-sm);
+      font-size: 11px; color: var(--gold-400); font-weight: 600;
+    }
+
+    /* ── ADMIN GATE ── */
+    .admin-login {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 32px 24px; gap: 18px;
+    }
+    .admin-login-title { font-size: 20px; font-weight: 800; }
+    .admin-login-sub { font-size: 13px; color: var(--gray-400); text-align: center; }
+    .form-group { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 11px; font-weight: 700; color: var(--gray-200); text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-input {
+      width: 100%; background: var(--navy-800); border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); padding: 11px 14px; font-size: 15px; color: var(--white); outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-input:focus { border-color: var(--gold-500); }
+    .incident-search-wrap {
+      position: sticky; top: 0; z-index: 5;
+      padding: 12px 16px 10px; background: var(--navy-900);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .incident-search {
+      width: 100%; background: var(--navy-800); border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md); padding: 11px 14px; font-size: 15px;
+      color: var(--white); outline: none; transition: border-color var(--transition);
+      -webkit-appearance: none;
+    }
+    .incident-search:focus { border-color: var(--gold-500); }
+    .incident-search::placeholder { color: var(--gray-400); }
+    .incident-no-results {
+      text-align: center; color: var(--gray-400); font-size: 13px;
+      padding: 28px 16px; line-height: 1.5;
+    }
+    .reset-checklist-btn {
+      flex-shrink: 0; background: var(--navy-800); color: var(--gray-200);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-sm);
+      padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .reset-checklist-btn:active { border-color: var(--gold-500); color: var(--gold-400); }
+    .contact-emergency-toggle {
+      display: flex; align-items: center; gap: 9px; margin: 4px 0 12px;
+      font-size: 13px; color: var(--gray-200); cursor: pointer; user-select: none;
+    }
+    .contact-emergency-toggle input { width: 17px; height: 17px; accent-color: var(--red-500); flex-shrink: 0; }
+    .contact-empty { font-size: 12px; color: var(--gray-400); padding: 4px 2px; }
+    .admin-version-stamp { font-size: 10px; color: var(--gray-400); margin-top: 3px; font-family: 'DM Mono', monospace; }
+    .form-textarea {
+      width: 100%; background: var(--navy-800); border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; color: var(--white);
+      outline: none; resize: vertical; min-height: 72px; line-height: 1.5;
+      transition: border-color var(--transition);
+    }
+    .form-textarea:focus { border-color: var(--gold-500); }
+    .btn-primary {
+      width: 100%; background: var(--gold-500); color: var(--navy-950);
+      font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 14px; border-radius: var(--radius-sm);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-primary:active { background: var(--gold-600); transform: scale(0.98); }
+
+    /* ── ADMIN PANEL ── */
+    .admin-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* Breadcrumb nav */
+    .admin-breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 16px; background: var(--navy-950);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 11px; overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .admin-breadcrumb::-webkit-scrollbar { display: none; }
+    .bc-item { color: var(--gray-400); font-weight: 600; cursor: pointer; }
+    .bc-item:hover { color: var(--gold-400); }
+    .bc-item.active { color: var(--white); font-weight: 700; cursor: default; }
+    .bc-sep { color: rgba(255,255,255,0.2); }
+
+    /* Admin views */
+    .admin-view { display: none; flex: 1; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .admin-view.active { display: flex; }
+
+    /* List of incidents for admin */
+    .admin-list { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; }
+    .admin-list-item {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); padding: 14px 16px;
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      transition: background var(--transition);
+    }
+    .admin-list-item:active { background: var(--navy-700); }
+    .admin-list-item-body { flex: 1; text-align: left; }
+    .admin-list-item-name { font-size: 14px; font-weight: 700; }
+    .admin-list-item-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .admin-list-arrow { color: var(--gray-400); font-size: 18px; }
+
+    /* Section cards (definition, announcements, roles) */
+    .section-cards { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; }
+    .section-card {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .section-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px; cursor: pointer; transition: background var(--transition);
+    }
+    .section-card-header:active { background: rgba(255,255,255,0.03); }
+    .section-card-icon { font-size: 18px; flex-shrink: 0; }
+    .section-card-title { font-size: 14px; font-weight: 700; flex: 1; margin: 0 10px; }
+    .section-card-sub { font-size: 11px; color: var(--gray-400); flex: 1; margin: 0 10px; margin-top: 2px; }
+    .section-card-arrow { color: var(--gray-400); font-size: 18px; }
+
+    /* Edit pane */
+    .edit-pane { display: flex; flex-direction: column; gap: 14px; padding: 14px 16px; }
+    .edit-field { display: flex; flex-direction: column; gap: 6px; }
+    .edit-field-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold-500); }
+
+    .btn-save {
+      background: var(--green-600); color: var(--white);
+      font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 10px 18px; border-radius: var(--radius-sm); align-self: flex-end;
+      transition: background var(--transition);
+    }
+    .btn-save:active { background: var(--green-500); }
+    .btn-add {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(212,160,23,0.1); border: 1px dashed rgba(212,160,23,0.4);
+      border-radius: var(--radius-md); padding: 13px 16px; width: 100%;
+      font-size: 13px; font-weight: 700; color: var(--gold-400);
+      transition: background var(--transition);
+    }
+    .btn-add:active { background: rgba(212,160,23,0.2); }
+    .btn-danger {
+      background: rgba(192,57,43,0.15); color: var(--red-400);
+      border: 1px solid rgba(192,57,43,0.3); font-size: 11px; font-weight: 700;
+      padding: 6px 12px; border-radius: var(--radius-sm);
+    }
+
+    /* Role rows in admin */
+    .role-row {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .role-row-header {
+      display: flex; align-items: center; gap: 10px; padding: 13px 16px;
+      cursor: pointer; transition: background var(--transition);
+    }
+    .role-row-header:active { background: rgba(255,255,255,0.03); }
+    .role-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .role-row-name { font-size: 14px; font-weight: 700; flex: 1; }
+    .role-row-count { font-size: 11px; color: var(--gray-400); }
+    .role-row-arrow { color: var(--gray-400); font-size: 18px; transition: transform var(--transition); }
+    .role-row-arrow.open { transform: rotate(90deg); }
+    .role-row-body { display: none; border-top: 1px solid rgba(255,255,255,0.06); }
+    .role-row-body.open { display: block; }
+
+    /* Action cards inside role admin */
+    .action-edit-card {
+      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 16px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .action-edit-card:last-of-type { border-bottom: none; }
+    .action-edit-num { font-size: 10px; font-weight: 700; color: var(--gold-500); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Announcement edit cards */
+    .announce-edit-card {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .announce-edit-header { display: flex; align-items: center; justify-content: space-between; }
+    .announce-edit-title { font-size: 13px; font-weight: 700; }
+
+    /* Admin logout */
+    .admin-footer {
+      padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--navy-950); flex-shrink: 0;
+    }
+    .admin-user-label { font-size: 11px; color: var(--gray-400); }
+    .admin-user-name { font-size: 13px; font-weight: 700; color: var(--gold-400); }
+
+    /* Info box */
+    .info-box {
+      padding: 10px 14px; background: rgba(46,81,144,0.15);
+      border: 1px solid rgba(46,81,144,0.3); border-radius: var(--radius-sm);
+      font-size: 12px; color: #7eb3ff; line-height: 1.6;
+    }
+
+    /* Simultaneous note */
+    .sim-note {
+      margin: 4px 16px 12px; padding: 10px 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+    }
+    .sim-note-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold-500); margin-bottom: 3px; }
+    .sim-note-text { font-size: 11px; color: var(--gray-400); line-height: 1.6; }
+
+    /* JSON buttons */
+    .btn-json {
+      background: rgba(46,81,144,0.2); color: #7eb3ff;
+      border: 1px solid rgba(46,81,144,0.4); font-size: 12px; font-weight: 700;
+      padding: 10px 14px; border-radius: var(--radius-sm); text-align: center;
+      transition: background var(--transition);
+    }
+    .btn-json:active { background: rgba(46,81,144,0.35); }
+    .btn-json-import { background: rgba(212,160,23,0.1); color: var(--gold-400); border-color: rgba(212,160,23,0.3); }
+    .btn-json-import:active { background: rgba(212,160,23,0.2); }
+
+    /* Confirm modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 200; display: none; align-items: flex-end; justify-content: center;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-sheet {
+      background: var(--navy-800); border-radius: 16px 16px 0 0;
+      width: 100%; max-width: 480px; padding: 24px 20px 32px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .modal-icon { font-size: 36px; text-align: center; }
+    .modal-title { font-size: 17px; font-weight: 800; text-align: center; color: var(--white); }
+    .modal-body { font-size: 13px; color: var(--gray-400); text-align: center; line-height: 1.6; }
+    .modal-warning {
+      background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3);
+      border-radius: var(--radius-sm); padding: 10px 14px;
+      font-size: 12px; color: var(--red-400); font-weight: 600; text-align: center; line-height: 1.5;
+    }
+    .modal-actions { display: flex; flex-direction: column; gap: 8px; }
+    .btn-confirm-delete {
+      background: var(--red-600); color: var(--white);
+      font-size: 14px; font-weight: 800; padding: 14px;
+      border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.05em;
+      transition: background var(--transition);
+    }
+    .btn-confirm-delete:active { background: var(--red-500); }
+    .btn-cancel-modal {
+      background: rgba(255,255,255,0.06); color: var(--gray-200);
+      font-size: 14px; font-weight: 600; padding: 13px;
+      border-radius: var(--radius-sm); transition: background var(--transition);
+    }
+    .btn-cancel-modal:active { background: rgba(255,255,255,0.1); }
+
+    /* Color swatches */
+    .color-swatch {
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; border: 3px solid transparent;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .color-swatch.selected { border-color: var(--white); transform: scale(1.15); }
+
+    /* Emoji grid */
+    .emoji-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gold-500); margin-bottom: 6px; }
+    .emoji-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .emoji-btn {
+      background: var(--navy-800); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-sm); padding: 8px 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      transition: background var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+    .emoji-btn:active, .emoji-btn.selected { background: rgba(212,160,23,0.15); border-color: var(--gold-500); }
+    .emoji-btn-icon { font-size: 22px; line-height: 1; }
+    .emoji-btn-label { font-size: 9px; color: var(--gray-400); text-align: center; line-height: 1.2; font-weight: 600; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--navy-700); color: var(--white);
+      padding: 11px 20px; border-radius: var(--radius-md);
+      font-size: 13px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 1000;
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.success { border-color: rgba(39,174,96,0.5); color: var(--green-400); }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+
+    /* active incident dot */
+    .pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red-500); animation: pdot 1.5s infinite;
+    }
+    @keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-bar-logo">
+      <svg viewBox="0 0 28 28" fill="none" aria-label="All Hazard Plan" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="#0a1628"/>
+        <path d="M14 5L22 22H6L14 5Z" fill="none" stroke="#d4a017" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="14" y1="11" x2="14" y2="17" stroke="#d4a017" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="14" cy="20" r="1.2" fill="#d4a017"/>
+      </svg>
+      <div>
+        <div class="top-bar-title">All Hazard Plan</div>
+        <div class="top-bar-subtitle" id="top-subtitle">5 Manhattan West</div>
+      </div>
+    </div>
+    <div class="top-bar-actions">
+      <div class="profile-info">
+        <div class="profile-role">Security Director</div>
+        <div class="profile-name">Jonathan Parham</div>
+        <a class="profile-phone" href="tel:6468664494">646.866.4494</a>
+      </div>
+      <div class="pulse-dot" id="active-dot" style="display:none;"></div>
+      <button class="btn-icon" onclick="showAdminGate()" title="Admin">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: HOME
+  ═══════════════════════════════════════ -->
+  <div class="screen active" id="screen-home">
+    <div class="menu-hero">
+      <div class="menu-hero-badge">🏢 Brookfield Properties</div>
+      <div class="menu-hero-title">Emergency Response</div>
+      <div class="menu-hero-sub" id="home-building-sub">Fire &amp; Life Safety — 5 Manhattan West</div>
+    </div>
+    <div class="menu-grid">
+      <button class="menu-tile primary" onclick="navigate('screen-incidents')">
+        <div class="menu-tile-icon">🚨</div>
+        <div>
+          <div class="menu-tile-label">Incident Response Actions</div>
+          <div class="menu-tile-desc">Role-based checklists</div>
+        </div>
+      </button>
+      <button class="menu-tile secondary" onclick="navigate('screen-app-intro')">
+        <div class="menu-tile-icon">📱</div>
+        <div>
+          <div class="menu-tile-label">App Intro</div>
+          <div class="menu-tile-desc">How to use this tool</div>
+        </div>
+      </button>
+      <button class="menu-tile green" onclick="navigate('screen-announce-eap')">
+        <div class="menu-tile-icon">📢</div>
+        <div>
+          <div class="menu-tile-label">Announce the EAP</div>
+          <div class="menu-tile-desc">Emergency announcements</div>
+        </div>
+      </button>
+      <button class="menu-tile orange" onclick="navigate('screen-building-info')">
+        <div class="menu-tile-icon">🏗️</div>
+        <div>
+          <div class="menu-tile-label">Building Specific Info</div>
+          <div class="menu-tile-desc">FDNY building info card</div>
+        </div>
+      </button>
+      <button class="menu-tile blue" onclick="navigate('screen-floor-plans')">
+        <div class="menu-tile-icon">🗺️</div>
+        <div>
+          <div class="menu-tile-label">Building Floor Plans</div>
+          <div class="menu-tile-desc">Layout &amp; egress maps</div>
+        </div>
+      </button>
+      <button class="menu-tile purple" onclick="navigate('screen-resources')">
+        <div class="menu-tile-icon">📄</div>
+        <div>
+          <div class="menu-tile-label">Additional Resources</div>
+          <div class="menu-tile-desc">Guides &amp; references</div>
+        </div>
+      </button>
+      <button class="menu-tile teal" onclick="navigate('screen-tenants')">
+        <div class="menu-tile-icon">🏢</div>
+        <div>
+          <div class="menu-tile-label">Tenant Directory</div>
+          <div class="menu-tile-desc">Tenants &amp; contacts by floor</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: INCIDENT LIST
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-incidents">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div class="screen-header-title">Incident Response</div>
+      <div class="screen-header-sub">Select an incident type</div>
+    </div>
+    <div class="scrollable">
+      <div class="incident-search-wrap">
+        <input class="incident-search" id="incident-search" type="search" inputmode="search"
+               placeholder="🔍  Filter incidents…" oninput="renderIncidentList()" autocomplete="off" />
+      </div>
+      <div class="incident-list" id="incident-list-container">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: INCIDENT DETAIL
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-incident-detail">
+    <div class="scrollable">
+      <!-- Banner -->
+      <div class="incident-banner">
+        <div class="incident-banner-icon" id="detail-icon">🚨</div>
+        <div style="flex:1;">
+          <div class="incident-banner-name" id="detail-name">—</div>
+          <div class="incident-banner-tagline" id="detail-tagline">—</div>
+        </div>
+        <button class="close-btn" onclick="navigate('screen-incidents')">✕</button>
+      </div>
+
+      <!-- Definition -->
+      <div class="detail-section" id="detail-def-section">
+        <div class="detail-section-label">📋 Definition</div>
+        <div class="detail-section-text" id="detail-def-text">—</div>
+      </div>
+
+      <!-- Announcements -->
+      <div class="detail-section" id="detail-announce-section">
+        <div class="detail-section-label">📢 Announcements</div>
+        <div id="detail-announce-content">—</div>
+      </div>
+
+      <!-- Role-based response actions -->
+      <div style="padding:10px 16px 4px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold-500);">Response Actions by Role</div>
+        <button class="reset-checklist-btn" onclick="confirmResetChecklist()">↺ Reset</button>
+      </div>
+      <div class="role-accordion" id="detail-roles-container">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- Simultaneous note -->
+      <div class="sim-note">
+        <div class="sim-note-label">Simultaneous Notifications</div>
+        <div class="sim-note-text">Deputy FLS Director and Pre-Designated Emergency Back-Up Personnel will assist in all Emergency Responses and Notifications.</div>
+      </div>
+
+      <!-- Quick Contacts -->
+      <div class="contact-bar pb-safe" id="detail-contacts">
+        <div class="contact-bar-title">Quick Contacts</div>
+        <div class="contact-list" id="detail-contact-list">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PLACEHOLDER SCREENS
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-app-intro">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">App Introduction</div>
+    </div>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📱</div>
+      <div class="placeholder-title">Mobile App Intro</div>
+      <div class="placeholder-text">Orientation and training content for this application will appear here.</div>
+      <div class="placeholder-admin-note">Admin: Add intro content via Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-announce-eap">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Announce the EAP</div>
+    </div>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📢</div>
+      <div class="placeholder-title">Emergency Announcements</div>
+      <div class="placeholder-text">Scripts and procedures for EAP announcements will be listed here by incident type.</div>
+      <div class="placeholder-admin-note">Admin: Add announcement scripts via Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-building-info">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Building Specific Info</div>
+    </div>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">🏗️</div>
+      <div class="placeholder-title">Building Information</div>
+      <div class="placeholder-text">Key contacts, utility shutoffs, vendor info, and building-specific data.</div>
+      <div class="placeholder-admin-note">Admin: Add building info via Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-floor-plans">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Building Floor Plans</div>
+    </div>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">🗺️</div>
+      <div class="placeholder-title">Floor Plans &amp; Egress Maps</div>
+      <div class="placeholder-text">Building layout diagrams, stairwell locations, AED placement, and evacuation routes.</div>
+      <div class="placeholder-admin-note">Admin: Upload floor plan images via Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-resources">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Additional Resources</div>
+    </div>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📄</div>
+      <div class="placeholder-title">Reference Documents</div>
+      <div class="placeholder-text">Training guides, regulatory documents, policy references, and supplemental materials.</div>
+      <div class="placeholder-admin-note">Admin: Add documents and links via Admin Panel</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: TENANT DIRECTORY
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-tenants">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Tenant Directory</div>
+      <div class="screen-header-sub">By floor · tap to call</div>
+    </div>
+    <div class="scrollable">
+      <div class="incident-search-wrap">
+        <input class="incident-search" id="tenant-search" type="search" inputmode="search"
+               placeholder="🔍  Filter by tenant, floor, or name…" oninput="renderTenants()" autocomplete="off" />
+      </div>
+      <div style="padding: 8px 16px 24px;" id="tenant-list-container"><!-- populated by JS --></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: ADMIN GATE
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-admin-gate">
+    <div class="screen-header">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back</button>
+      <div class="screen-header-title">Admin Access</div>
+      <div class="screen-header-sub">Authorized personnel only</div>
+    </div>
+    <div class="admin-login">
+      <div style="font-size:40px;">🔐</div>
+      <div style="text-align:center;">
+        <div class="admin-login-title">Admin Panel</div>
+        <div class="admin-login-sub" style="margin-top:4px;">Manage incidents, roles, announcements, and contacts.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="admin-user">Email</label>
+        <input class="form-input" type="email" id="admin-user" placeholder="Email address" autocomplete="username" inputmode="email"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="admin-pass">Password</label>
+        <input class="form-input" type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <button class="btn-primary" onclick="adminLogin()">Sign In</button>
+      <div style="font-size:11px;color:var(--gray-400);text-align:center;">Authorized personnel only</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCREEN: ADMIN PANEL
+  ═══════════════════════════════════════ -->
+  <div class="screen" id="screen-admin">
+    <div class="screen-header" style="padding-bottom:10px;">
+      <button class="back-btn" onclick="navigate('screen-home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Back to App</button>
+      <div class="screen-header-title">Admin Panel</div>
+    </div>
+
+    <div class="admin-panel">
+      <!-- Breadcrumb -->
+      <div class="admin-breadcrumb" id="admin-breadcrumb">
+        <span class="bc-item active" onclick="adminNav('home')">Admin Home</span>
+      </div>
+
+      <!-- ══ VIEW: Admin Home ══ -->
+      <div class="admin-view active" id="av-home">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          <div class="info-box">Select a section to edit its content.</div>
+
+          <button class="admin-list-item" onclick="adminNav('incidents')">
+            <span style="font-size:22px;">🚨</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Incident Response Actions</div>
+              <div class="admin-list-item-sub">Add &amp; edit incident types, roles, and response actions</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('app-intro')">
+            <span style="font-size:22px;">📱</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">App Introduction</div>
+              <div class="admin-list-item-sub">Orientation and training content</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('eap-announce')">
+            <span style="font-size:22px;">📢</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Announce the EAP</div>
+              <div class="admin-list-item-sub">Emergency announcement scripts</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('building-info')">
+            <span style="font-size:22px;">🏗️</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Building Specific Info</div>
+              <div class="admin-list-item-sub">Contacts, vendors, and building details</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('floor-plans')">
+            <span style="font-size:22px;">🗺️</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Building Floor Plans</div>
+              <div class="admin-list-item-sub">Floor plan image URLs and egress notes</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('resources')">
+            <span style="font-size:22px;">📄</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Additional Resources</div>
+              <div class="admin-list-item-sub">Reference documents and links</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <button class="admin-list-item" onclick="adminNav('settings')">
+            <span style="font-size:22px;">⚙️</span>
+            <div class="admin-list-item-body">
+              <div class="admin-list-item-name">Settings</div>
+              <div class="admin-list-item-sub">Building name, address, admin credentials</div>
+            </div>
+            <div class="admin-list-arrow">›</div>
+          </button>
+
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="btn-json" onclick="exportJSON()" style="flex:1;">⬇ Export JSON</button>
+            <button class="btn-json btn-json-import" onclick="document.getElementById('json-import-input').click()" style="flex:1;">⬆ Import JSON</button>
+          </div>
+          <input type="file" id="json-import-input" accept=".json,application/json,text/plain,*/*" style="display:none;" onchange="importJSON(event)"/>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Incident list ══ -->
+      <div class="admin-view" id="av-incidents">
+        <div class="admin-list" id="admin-incident-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddIncident()">
+            <span style="font-size:18px;">＋</span> Add New Incident Type
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Incident sections ══ -->
+      <div class="admin-view" id="av-incident-sections">
+        <div class="section-cards" id="admin-section-cards"></div>
+      </div>
+
+      <!-- ══ VIEW: Definition editor ══ -->
+      <div class="admin-view" id="av-definition">
+        <div class="edit-pane">
+          <div class="info-box">Edit the definition that appears at the top of the incident screen.</div>
+          <div class="edit-field">
+            <div class="edit-field-label">Incident Definition</div>
+            <textarea class="form-textarea" id="edit-definition" style="min-height:120px;"></textarea>
+          </div>
+          <button class="btn-save" onclick="saveDefinition()">Save Definition</button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Incident Announcements ══ -->
+      <div class="admin-view" id="av-announcements">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;" id="admin-announce-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddAnnouncement()">
+            <span style="font-size:18px;">＋</span> Add Announcement Script
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Role list ══ -->
+      <div class="admin-view" id="av-roles">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;" id="admin-role-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddRole()">
+            <span style="font-size:18px;">＋</span> Add Role
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Role actions editor ══ -->
+      <div class="admin-view" id="av-role-actions">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;" id="admin-action-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddAction()">
+            <span style="font-size:18px;">＋</span> Add Response Action
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Incident Contacts editor ══ -->
+      <div class="admin-view" id="av-contacts">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;" id="admin-contact-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddContact()">
+            <span style="font-size:18px;">＋</span> Add Contact
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: App Intro editor ══ -->
+      <div class="admin-view" id="av-app-intro">
+        <div class="edit-pane">
+          <div class="info-box">This content appears on the App Introduction screen visible to all users.</div>
+          <div class="edit-field">
+            <div class="edit-field-label">Introduction Title</div>
+            <input class="form-input" id="set-intro-title" placeholder="e.g. Welcome to All Hazard Plan"/>
+          </div>
+          <div class="edit-field">
+            <div class="edit-field-label">Introduction Body</div>
+            <textarea class="form-textarea" id="set-intro-body" style="min-height:140px;" placeholder="Describe how to use the app, who it is for, and key instructions..."></textarea>
+          </div>
+          <button class="btn-save" onclick="saveSimpleSection('intro','set-intro-title','set-intro-body')">Save Introduction</button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: EAP Announcements editor ══ -->
+      <div class="admin-view" id="av-eap-announce">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;" id="admin-eap-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddEapScript()">
+            <span style="font-size:18px;">＋</span> Add EAP Announcement Script
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Building Info editor ══ -->
+      <div class="admin-view" id="av-building-info">
+        <div class="edit-pane">
+          <div class="info-box">Building-specific information shown to all users under Building Specific Info.</div>
+          <div class="edit-field">
+            <div class="edit-field-label">Building Name</div>
+            <input class="form-input" id="set-bld-name" placeholder="5 Manhattan West"/>
+          </div>
+          <div class="edit-field">
+            <div class="edit-field-label">Address</div>
+            <input class="form-input" id="set-bld-address" placeholder="450 W 33rd St, New York, NY 10001"/>
+          </div>
+          <div class="edit-field">
+            <div class="edit-field-label">Property Owner / Manager</div>
+            <input class="form-input" id="set-bld-owner" placeholder="Brookfield Properties"/>
+          </div>
+          <div class="edit-field">
+            <div class="edit-field-label">Key Contacts &amp; Notes</div>
+            <textarea class="form-textarea" id="set-bld-notes" style="min-height:120px;" placeholder="e.g. Chief Engineer: John Smith — 212-555-0100&#10;Building Manager: Jane Doe — 212-555-0101&#10;After-hours Security: 646-555-0199"></textarea>
+          </div>
+          <button class="btn-save" onclick="saveBuildingInfo()">Save Building Info</button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Floor Plans editor ══ -->
+      <div class="admin-view" id="av-floor-plans">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;" id="admin-floorplan-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddFloorPlan()">
+            <span style="font-size:18px;">＋</span> Add Floor Plan / Map
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Resources editor ══ -->
+      <div class="admin-view" id="av-resources">
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;" id="admin-resource-list"></div>
+        <div style="padding:0 16px 16px;">
+          <button class="btn-add" onclick="adminAddResource()">
+            <span style="font-size:18px;">＋</span> Add Resource / Link
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ VIEW: Settings ══ -->
+      <div class="admin-view" id="av-settings">
+        <div class="edit-pane">
+          <div class="info-box">App-wide settings and admin credentials.</div>
+          <div class="edit-field">
+            <div class="edit-field-label">App / Building Name (shown in top bar)</div>
+            <input class="form-input" id="set-app-building" />
+          </div>
+          <button class="btn-save" onclick="saveAppSettings()">Save Settings</button>
+          <div style="height:1px;background:rgba(255,255,255,0.06);margin:4px 0;"></div>
+          <div class="edit-field">
+            <div class="edit-field-label">New Admin Password</div>
+            <input class="form-input" type="password" id="set-new-pass" placeholder="New password"/>
+          </div>
+          <div class="edit-field">
+            <div class="edit-field-label">Confirm Password</div>
+            <input class="form-input" type="password" id="set-confirm-pass" placeholder="Confirm password"/>
+          </div>
+          <button class="btn-save" onclick="saveAdminPassword()">Update Password</button>
+        </div>
+      </div>
+
+    </div><!-- /admin-panel -->
+
+    <div class="admin-footer">
+      <div>
+        <div class="admin-user-label">Signed in as</div>
+        <div class="admin-user-name">Administrator</div>
+        <div class="admin-version-stamp">AHP v1.2.1 · 2026-06-29</div>
+      </div>
+      <button class="btn-danger" onclick="adminLogout()">Sign Out</button>
+    </div>
+  </div>
+
+</div><!-- /#app -->
+
+<!-- Add Role Modal -->
+<div class="modal-overlay" id="role-modal" onclick="closeRoleModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()" style="gap:14px;">
+    <div style="font-size:28px;text-align:center;">👥</div>
+    <div class="modal-title">Add Role</div>
+    <div class="edit-field" style="width:100%;">
+      <div class="edit-field-label" style="margin-bottom:6px;">Role Name</div>
+      <input class="form-input" id="new-role-name" placeholder="e.g. Fire Life Safety Director" />
+    </div>
+    <div class="edit-field" style="width:100%;">
+      <div class="edit-field-label" style="margin-bottom:8px;">Color</div>
+      <div id="role-color-picker" style="display:flex;flex-wrap:wrap;gap:8px;">
+        <div class="color-swatch" data-color="#e74c3c" style="background:#e74c3c;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#27ae60" style="background:#27ae60;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#7eb3ff" style="background:#7eb3ff;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#e07b00" style="background:#e07b00;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#9b59b6" style="background:#9b59b6;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#1abc9c" style="background:#1abc9c;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#f39c12" style="background:#f39c12;" onclick="selectRoleColor(this)"></div>
+        <div class="color-swatch" data-color="#d4a017" style="background:#d4a017;" onclick="selectRoleColor(this)"></div>
+      </div>
+    </div>
+    <div class="modal-actions" style="width:100%;">
+      <button class="btn-confirm-delete" style="background:var(--green-600);" onclick="confirmAddRole()">Add Role</button>
+      <button class="btn-cancel-modal" onclick="closeRoleModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Emoji Picker Modal -->
+<div class="modal-overlay" id="emoji-modal" onclick="closeEmojiModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()" style="gap:12px;max-height:75vh;overflow-y:auto;">
+    <div class="modal-title">Choose Incident Icon</div>
+    <div style="font-size:12px;color:var(--gray-400);text-align:center;margin-top:-6px;">Tap an emoji or type your own below</div>
+    <div style="display:flex;flex-direction:column;gap:10px;" id="emoji-groups">
+      <!-- populated by JS -->
+    </div>
+    <div class="edit-field" style="width:100%;">
+      <div class="edit-field-label" style="margin-bottom:6px;">Or type any emoji</div>
+      <input class="form-input" id="custom-emoji-input" placeholder="🚨" maxlength="4" style="font-size:24px;text-align:center;padding:10px;" oninput="previewCustomEmoji(this)"/>
+    </div>
+    <div class="modal-actions" style="width:100%;">
+      <button class="btn-confirm-delete" style="background:var(--navy-600);" onclick="applyEmoji()">Apply Icon</button>
+      <button class="btn-cancel-modal" onclick="closeEmojiModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="confirm-modal" onclick="closeModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title" id="modal-title">Delete Incident?</div>
+    <div class="modal-body" id="modal-body">This action cannot be undone.</div>
+    <div class="modal-warning" id="modal-warning">All definitions, announcements, roles, and response actions for this incident will be permanently deleted.</div>
+    <div class="modal-actions">
+      <button class="btn-confirm-delete" id="modal-confirm-btn">Delete Permanently</button>
+      <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════
+     DATA & LOGIC
+═══════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────
+// DATA MODEL
+// Structure:
+//   incidents[id] = {
+//     id, name, icon, definition, tagline,
+//     announcements: [ {id, title, script} ],
+//     roles: [
+//       { id, name, color, actions: [
+//           { id, text, how, why, who, critical }
+//       ]}
+//     ],
+//     contacts: [ {label, number} ]
+//   }
+// ─────────────────────────────────────────
+
+const DEFAULT_DATA = {
+  buildingName: '5 Manhattan West',
+  incidents: {
+    'elevator-entrapment': {
+      id: 'elevator-entrapment',
+      name: 'Elevator Entrapment',
+      icon: '🛗',
+      tagline: 'Not inherently dangerous — treat as emergency',
+      definition: 'An Elevator Entrapment occurs when an Elevator or Elevators lose power or experience a mechanical malfunction that causes occupants to be trapped in the Elevator. This is not an inherently dangerous situation, but must be handled as an emergency.',
+      announcements: [
+        {
+          id: 'ann-1',
+          title: 'No Announcement Required',
+          script: 'THERE IS NO ANNOUNCEMENT REQUIRED FOR ELEVATOR ENTRAPMENT INCIDENTS.'
+        }
+      ],
+      roles: [
+        {
+          id: 'role-fls',
+          name: 'Fire Life Safety Director',
+          color: '#e74c3c',
+          actions: [
+            {
+              id: 'a1', stepNum: 1,
+              text: 'Talk with Elevator Passengers. Inform them you have identified their Car as stuck and are notifying the Elevator Mechanic. Ask Occupant to press the "Door Open" Button. Ask how many people are in the Elevator and if anyone needs Medical Assistance. Direct Occupants to stay away from the doors.',
+              how: 'Via intercom in Lobby (FCC).',
+              why: 'Maintaining verbal contact will ease the anxiety of entrapped Occupants. NOTE: If someone entered an open Elevator Car without selecting a Floor, pressing the "Door Open" Button will resolve the issue.',
+              critical: false
+            },
+            {
+              id: 'a2', stepNum: 2,
+              text: 'Identify which Car is stuck.',
+              how: 'Identify location of Car from FCC.',
+              why: 'Exact location of Car is needed to render assistance.',
+              critical: false
+            },
+            {
+              id: 'a3', stepNum: 3,
+              text: 'View stuck Car on CCTV System (if available).',
+              how: 'Monitor at FCC.',
+              why: 'Establishing visual contact through CCTV will assist in making a proper assessment.',
+              critical: false
+            },
+            {
+              id: 'a4', stepNum: 4,
+              text: 'Contact Elevator Mechanic. Notify of Car Number, location, and how many people are in the Car.',
+              how: 'Hand held radio, cell phone, or telephone. After business hours — contact the Elevator Company directly to respond.',
+              why: 'Expediting the removal of stuck Occupants is of the utmost importance.',
+              critical: false
+            },
+            {
+              id: 'a5', stepNum: 5,
+              text: 'Notify the SOC at 646-906-8441 and the Property Management Office at 212-947-7887.',
+              how: 'Hand held radio, cell phone, or telephone.',
+              why: 'Provide situational information to all responsible parties.',
+              critical: false
+            },
+            {
+              id: 'a6', stepNum: 6,
+              text: 'Maintain contact with Entrapped Passengers. Notify Lobby Desk for medical assistance if needed.',
+              how: 'Via Elevator intercom.',
+              why: 'If Medical Assistance is required — 911 must be notified immediately.',
+              critical: false
+            },
+            {
+              id: 'a7', stepNum: 7,
+              text: 'IMMEDIATELY NOTIFY 911 if at any point someone entrapped requires Medical Assistance. Follow procedures under Medical Emergency tab.',
+              how: 'Call 911.',
+              why: 'An entrapment becomes an Emergency when Medical Assistance is needed.',
+              critical: true
+            },
+            {
+              id: 'a8', stepNum: 8,
+              text: 'Complete Elevator Entrapment Report and timeline after Occupants are freed. Send notification Email. Record in FCC Post Log Book.',
+              how: 'Notification sent via Email. Record in FCC Post Log Book.',
+              why: 'To document factual particulars of incident date, time, names, and contact info.',
+              critical: false
+            }
+          ]
+        },
+        {
+          id: 'role-security',
+          name: 'Lobby Security / Security',
+          color: '#27ae60',
+          actions: [
+            {
+              id: 'b1', stepNum: 1,
+              text: 'Talk with Elevator Passengers via FCC intercom. Identify which Car is stuck and view on CCTV if available.',
+              how: 'Via intercom in Lobby (FCC). Monitor CCTV at FCC.',
+              why: 'Maintaining verbal contact and visual monitoring assists in making a proper assessment.',
+              critical: false
+            },
+            {
+              id: 'b2', stepNum: 2,
+              text: 'Contact Elevator Mechanic. Notify of Car Number, location, and number of people in the Car.',
+              how: 'Hand held radio, cell phone, or telephone.',
+              why: 'Expediting the removal of stuck Occupants is of the utmost importance.',
+              critical: false
+            },
+            {
+              id: 'b3', stepNum: 3,
+              text: 'Notify the SOC at 646-906-8441 and the Property Management Office at 212-947-7887.',
+              how: 'Hand held radio, cell phone, or telephone.',
+              why: 'Provide situational information to all responsible parties.',
+              critical: false
+            },
+            {
+              id: 'b4', stepNum: 4,
+              text: 'Complete Elevator Entrapment Report and timeline after Occupants are freed.',
+              how: 'Record in FCC Post Log Book.',
+              why: 'To document factual particulars of incident date, time, names, and contact info.',
+              critical: false
+            }
+          ]
+        },
+        {
+          id: 'role-eap',
+          name: 'Any EAP / Building Staff Member',
+          color: '#e07b00',
+          actions: [
+            {
+              id: 'c1', stepNum: 1,
+              text: 'DO NOT ATTEMPT TO EVACUATE OCCUPANTS FROM ELEVATOR THAT HAS STOPPED BETWEEN FLOORS. Evacuation must be conducted by Elevator Mechanic or Emergency Responders ONLY.',
+              how: 'NEVER ATTEMPT TO FORCE OPEN A HOISTWAY DOOR. Reassure stuck Occupants that proper notifications have been made and help is on the way.',
+              why: 'Persons may be seriously injured or killed if the Elevator begins moving unexpectedly.',
+              critical: true
+            }
+          ]
+        },
+        {
+          id: 'role-property',
+          name: 'Property Management Staff',
+          color: '#7eb3ff',
+          actions: [
+            {
+              id: 'd1', stepNum: 1,
+              text: 'Maintain contact with Entrapped Passengers. Notify Lobby Desk for medical assistance if needed.',
+              how: 'Via Elevator intercom.',
+              why: 'If Medical Assistance is required — 911 must be notified.',
+              critical: false
+            },
+            {
+              id: 'd2', stepNum: 2,
+              text: 'Continue to maintain frequent contact with Passengers in Elevator. Provide updates, check on physical condition, and inform them of the status of the Elevator Mechanic.',
+              how: 'Via Elevator intercom at FCC.',
+              why: 'Maintaining two-way voice communication will ease the anxiety of stuck Occupants.',
+              critical: false
+            }
+          ]
+        }
+      ],
+      contacts: [
+        { label: 'SOC', number: '646-906-8441', emergency: false },
+        { label: 'Property Management', number: '212-947-7887', emergency: false },
+        { label: 'Emergency', number: '911', emergency: true }
+      ]
+    }
+  },
+  sections:   {
+    "bic": {
+      "bin": "1089695",
+      "address": "450 West 33 Street, New York, NY 10001",
+      "aka": "5 Manhattan West",
+      "revised": "12/08/2025",
+      "groups": [
+        {
+          "id": "info",
+          "title": "Building Information",
+          "rows": [
+            {
+              "label": "Construction Class",
+              "value": "Class 1 – Fireproof"
+            },
+            {
+              "label": "Occupancy 1 — Office",
+              "value": "1st – 16th Fl (no 13th Fl designated)"
+            },
+            {
+              "label": "Occupancy 2 — Retail",
+              "value": "1st & 2nd Fl"
+            },
+            {
+              "label": "Public Assembly Areas",
+              "value": "Basement (Deli) · 2nd Fl (Coffee Shop, Nail Salon & Newsstand)"
+            },
+            {
+              "label": "Building Population",
+              "value": "Day 3,895 · Night 350 · Weekend 350"
+            }
+          ]
+        },
+        {
+          "id": "stats",
+          "title": "Building Statistics",
+          "rows": [
+            {
+              "label": "Stories Above Grade",
+              "value": "15"
+            },
+            {
+              "label": "Stories Below Grade",
+              "value": "1"
+            },
+            {
+              "label": "Height",
+              "value": "240 ft"
+            },
+            {
+              "label": "Ground Level Floor Area",
+              "value": "135,000 sq ft"
+            },
+            {
+              "label": "Ground Level Dimensions",
+              "value": "450 × 300 ft"
+            },
+            {
+              "label": "Type of Construction",
+              "value": "Steel & Concrete"
+            },
+            {
+              "label": "Truss Construction",
+              "value": "Roof & Floors — 16th Fl"
+            },
+            {
+              "label": "Roof Setback Levels",
+              "value": "2nd, 16th Fl & 16th Mezzanine"
+            }
+          ]
+        },
+        {
+          "id": "stairways",
+          "title": "Exit Stairways",
+          "rows": [
+            {
+              "label": "Stair A",
+              "value": "W 33 St · 3rd – 16th Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair B",
+              "value": "1st – 16 Mezz Stbk · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair C",
+              "value": "B – 2nd, 3rd – 16th Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair D",
+              "value": "B – W 31 St / 1st, 3rd – 16th Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair D1",
+              "value": "W 31 St / 1st Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair E",
+              "value": "1st – 2nd, 3rd – 16th Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair F",
+              "value": "W 33 St – 16th Fl · Pressurized · Standpipe"
+            },
+            {
+              "label": "Stair G",
+              "value": "1st – 2nd, 3rd – 4th Fl · Not Pressurized · Standpipe"
+            },
+            {
+              "label": "Re-entry Floors",
+              "value": "4th, 8th & 11th Fl via fail-safe"
+            },
+            {
+              "label": "Roof Access",
+              "value": "Access stairs & ladders"
+            },
+            {
+              "label": "Escalator",
+              "value": "1st – 2nd Fl"
+            },
+            {
+              "label": "Fire Towers / Escapes",
+              "value": "N/A"
+            }
+          ]
+        },
+        {
+          "id": "elevators",
+          "title": "Elevators",
+          "rows": [
+            {
+              "label": "Bank A — A1, A4–A6",
+              "value": "2nd Mezz – 7th Fl"
+            },
+            {
+              "label": "Bank A — A2",
+              "value": "1st – 7th Fl"
+            },
+            {
+              "label": "Bank A — A3",
+              "value": "2nd, 3rd – 7th Fl"
+            },
+            {
+              "label": "Bank B — B1–B5",
+              "value": "2nd, 7th – 11th Fl"
+            },
+            {
+              "label": "Bank C — C1–C5",
+              "value": "2nd, 11th – 16th Fl"
+            },
+            {
+              "label": "Bank D — D1–D2",
+              "value": "1st – 2nd Fl"
+            },
+            {
+              "label": "Bank E — E1",
+              "value": "1st, 3rd – 4th Fl"
+            },
+            {
+              "label": "Bank F — F5",
+              "value": "Basement – 1st Fl"
+            },
+            {
+              "label": "Bank F — F7",
+              "value": "1st – 15th Fl (not in use)"
+            },
+            {
+              "label": "Bank F — F8",
+              "value": "1st, 11th, 14th – 16th Fl"
+            },
+            {
+              "label": "Bank F — F9",
+              "value": "Basement – 1st, 6th – 10th, 12th – 15th Fl"
+            },
+            {
+              "label": "Bank F — F10–F11",
+              "value": "1st, 8th Fl"
+            },
+            {
+              "label": "Bank F — F12",
+              "value": "1st, 8th, 10th Fl"
+            },
+            {
+              "label": "Bank F — F13",
+              "value": "1st – 2nd, 11th – 12th Fl"
+            },
+            {
+              "label": "Bank F — F14",
+              "value": "1st – 2nd, 3rd, 8th, 11th Fl"
+            },
+            {
+              "label": "Bank F — F15",
+              "value": "1st, 2nd, 3rd, 5th – 7th, 9th – 16th Fl"
+            },
+            {
+              "label": "Bank G — G1 (Freight)",
+              "value": "1st – 2nd Fl"
+            },
+            {
+              "label": "Bank H — H1",
+              "value": "1st – 2nd Fl"
+            },
+            {
+              "label": "Bank I — I1",
+              "value": "1st – 2nd Fl"
+            },
+            {
+              "label": "Bank L — L1",
+              "value": "16th – 16th Mezz"
+            },
+            {
+              "label": "Bank Z — Z1",
+              "value": "W 31 St – 2nd Fl"
+            },
+            {
+              "label": "Sky Lobby",
+              "value": "16th Floor"
+            }
+          ]
+        },
+        {
+          "id": "ventilation",
+          "title": "Ventilation / HVAC",
+          "rows": [
+            {
+              "label": "HVAC Zones",
+              "value": "Individual package units on 1st – 5th, 7th – 16th Fl"
+            },
+            {
+              "label": "Water Cooling Tower",
+              "value": "16th Mezzanine"
+            },
+            {
+              "label": "Building Mgmt System (BMS)",
+              "value": "Yes — on-site Basement"
+            },
+            {
+              "label": "Mechanical Room(s)",
+              "value": "Basement"
+            },
+            {
+              "label": "Smoke Management / Purge",
+              "value": "N/A"
+            }
+          ]
+        },
+        {
+          "id": "utilities",
+          "title": "Utilities & Shutoffs",
+          "rows": [
+            {
+              "label": "Natural Gas",
+              "value": "Yes — shutoff Basement / W 31 St"
+            },
+            {
+              "label": "Electric",
+              "value": "Yes — Basement / W 31 St"
+            },
+            {
+              "label": "Steam",
+              "value": "Yes — Basement / W 31 St"
+            },
+            {
+              "label": "Emergency Generator",
+              "value": "Yes — Diesel · (4) on 16th Mezzanine roof set-back"
+            }
+          ]
+        },
+        {
+          "id": "fire",
+          "title": "Fire Protection System",
+          "rows": [
+            {
+              "label": "Sprinkler System",
+              "value": "Building fully sprinklered"
+            },
+            {
+              "label": "Standpipe Locations",
+              "value": "Stairways A, B, C, D, E & F · additional hose outlets throughout"
+            },
+            {
+              "label": "Standpipe Isolation Valves",
+              "value": "Bsmt, 1st, 2nd, 4th, 15th, 16th Fl & 16th Mz"
+            },
+            {
+              "label": "FD Connections (8 total)",
+              "value": "(1) Sprnklr + (1) SP on W 31 St · (1) Sprnklr + (1) SP on W 33 St · (2) Sprnklr + (2) SP on Tenth Ave"
+            },
+            {
+              "label": "Fire Pump",
+              "value": "Basement — Manual / 750 GPM"
+            },
+            {
+              "label": "Booster Pump",
+              "value": "Basement — Manual / 1500 GPM"
+            },
+            {
+              "label": "Water Source",
+              "value": "City main: Bsmt (W 31 St) & 1st (W 33 St) · (6) sprnklr pressure tanks 16th Fl · SP gravity tank 16th Mezz"
+            },
+            {
+              "label": "Non-Water Systems",
+              "value": "Ansul: 1st, 2nd & 11th Fl · Pre-action: 1st, 2nd, 4th, (3) 5th, 7th, 9th, (2) 11th, 12th, 16th Fl · Dry pipe: 1st Fl"
+            }
+          ]
+        },
+        {
+          "id": "hazmat",
+          "title": "Hazardous Materials",
+          "rows": [
+            {
+              "label": "Diesel — (2) 3,000 gal",
+              "value": "1st Floor"
+            },
+            {
+              "label": "Diesel — 4,000 gal",
+              "value": "Basement"
+            },
+            {
+              "label": "Diesel — 5,000 gal",
+              "value": "Basement"
+            },
+            {
+              "label": "Diesel — (2) 275 gal",
+              "value": "16th Mezz roof set-back"
+            },
+            {
+              "label": "Diesel — 45 gal",
+              "value": "16th Mezz roof set-back"
+            },
+            {
+              "label": "Diesel — 10 gal",
+              "value": "16th Mezz roof set-back"
+            }
+          ]
+        },
+        {
+          "id": "special",
+          "title": "Special Notes",
+          "rows": [
+            {
+              "label": "ADA Lifts",
+              "value": "(2) 1st Fl & (2) 2nd Fl"
+            }
+          ]
+        },
+        {
+          "id": "telecom",
+          "title": "Telecom / Phone Accounts",
+          "rows": [
+            {
+              "label": "POTS Lines — Verizon",
+              "value": "Svc Call/Repair 1-800-837-4966 · Acct 651-430-759-0001-94"
+            },
+            {
+              "label": "FA Phone Lines",
+              "value": "212-967-3225 / 212-967-3226"
+            },
+            {
+              "label": "VOIP — CBRE IT",
+              "value": "Svc Call/Repair 877-435-7547"
+            },
+            {
+              "label": "Account Name",
+              "value": "450 Partners / Brookfield Properties"
+            }
+          ]
+        },
+        {
+          "id": "firesafety",
+          "title": "Building Fire Safety Contacts",
+          "rows": [
+            {
+              "label": "FS / EAP Director — Willie Garcia",
+              "value": "Work 212-947-7887 · Emergency 646-409-0950"
+            },
+            {
+              "label": "Building Engineer — Mark Alicea",
+              "value": "Work 212-560-0710 · Emergency 347-749-7524"
+            },
+            {
+              "label": "Managing Agent — Brookfield (David Pereira)",
+              "value": "Work 212-947-7887 · Emergency 718-913-8453"
+            }
+          ]
+        }
+      ]
+    },
+    "tenants": [
+      {
+        "id": "starbucks",
+        "name": "Starbucks",
+        "type": "Office",
+        "floors": "Lobby/Main",
+        "store": "Store#49952 · Store: (646)648-3696",
+        "contacts": [
+          {
+            "name": "Matt Fry",
+            "title": "Facilities Services Manager",
+            "office": "732-841-0902",
+            "emergency": "",
+            "email": "mafry@starbucks.com"
+          },
+          {
+            "name": "Fazel Razavi",
+            "title": "District Manager",
+            "office": "347-501-1127",
+            "emergency": "",
+            "email": "frazavi@starbucks.com"
+          },
+          {
+            "name": "TBD",
+            "title": "Store Supervisor",
+            "office": "",
+            "emergency": "",
+            "email": ""
+          }
+        ]
+      },
+      {
+        "id": "fisa-opa",
+        "name": "FISA-OPA",
+        "type": "Office",
+        "floors": "3rd, 4th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "John Manfredi",
+            "title": "Director of Facilites",
+            "office": "212-857-1550",
+            "emergency": "646-210-2369",
+            "email": "jmanfredi@fisa-opa.nyc.gov"
+          },
+          {
+            "name": "Anthony Palermo",
+            "title": "FISA Director of Security",
+            "office": "212-857-1264",
+            "emergency": "917-440-7285",
+            "email": "apalermo@fisa-opa.nyc.gov"
+          }
+        ]
+      },
+      {
+        "id": "amazon",
+        "name": "Amazon",
+        "type": "Office",
+        "floors": "6th,7th,8th,10th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Ashley Grogg",
+            "title": "Facilities Manager",
+            "office": "",
+            "emergency": "812-320-0943",
+            "email": "aggrogg@amazon.com"
+          },
+          {
+            "name": "Ching-Hsiu Ko",
+            "title": "Assistant Facilities Manager",
+            "office": "",
+            "emergency": "929-687-0158",
+            "email": "koching@amazon.com"
+          },
+          {
+            "name": "Jason Chan",
+            "title": "Facilities Coordinator",
+            "office": "",
+            "emergency": "929-745-2392",
+            "email": "jaschay@amazon.com"
+          }
+        ]
+      },
+      {
+        "id": "nyc-boe",
+        "name": "NYC - BOE",
+        "type": "Office",
+        "floors": "8th, 10th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Nick Squicciarini",
+            "title": "Facilities Manager",
+            "office": "212-487-8875",
+            "emergency": "917-689-4429",
+            "email": "nsquicciarini@boenyc.gov"
+          },
+          {
+            "name": "Viola Hamilton-Keith",
+            "title": "Supervisor",
+            "office": "212-465-0503 x1208",
+            "emergency": "",
+            "email": "vhamilton-keith@boenyc.gov"
+          },
+          {
+            "name": "Benjamin Acevedo",
+            "title": "Supervisor",
+            "office": "212-465-0503 x1251",
+            "emergency": "917-613-1819/646-623-2413",
+            "email": "bacevedo@boenyc.gov"
+          },
+          {
+            "name": "Xavier Milligan",
+            "title": "Supervisor",
+            "office": "212-465-0503",
+            "emergency": "646-522-0569",
+            "email": "xmilligan@boenyc.gov"
+          },
+          {
+            "name": "Angel Fernandez",
+            "title": "Supervisor",
+            "office": "212-465-0503",
+            "emergency": "347-285-3896",
+            "email": "afernandez@boenyc.gov"
+          },
+          {
+            "name": "Rhonda Evans",
+            "title": "Deputy Chief",
+            "office": "212-886-2113",
+            "emergency": "917-923-5041",
+            "email": "revans2@boenyc.gov"
+          },
+          {
+            "name": "Camile Montaque",
+            "title": "Office Manager",
+            "office": "212-886-2107",
+            "emergency": "347-582-0797",
+            "email": "CMontaque@boenyc.gov"
+          },
+          {
+            "name": "Stephen Evans",
+            "title": "Chief Clerk",
+            "office": "",
+            "emergency": "646-530-1836",
+            "email": "Sevans@boenyc.gov"
+          }
+        ]
+      },
+      {
+        "id": "jp-morgan-chase",
+        "name": "JP Morgan Chase",
+        "type": "Office",
+        "floors": "14th, 15th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Conor Anderson",
+            "title": "Facilities Manager",
+            "office": "570-807-0565",
+            "emergency": "",
+            "email": "conor.anderson@jpmchase.com"
+          },
+          {
+            "name": "Steven Smith",
+            "title": "Facilities Coordinator",
+            "office": "",
+            "emergency": "",
+            "email": "steven.smith@jpmchase.com"
+          },
+          {
+            "name": "Vaughn Woods",
+            "title": "Chief Engineer",
+            "office": "646-343-3916",
+            "emergency": "646-745-5605",
+            "email": "vaughn.a.woodsr@jpmchase.com"
+          },
+          {
+            "name": "Blanco",
+            "title": "",
+            "office": "",
+            "emergency": "917-658-8421",
+            "email": "jeffrey.blanco@jpmorgan.com"
+          }
+        ]
+      },
+      {
+        "id": "markit-n-a-s-p-global",
+        "name": "Markit N.A. (S&P Global)",
+        "type": "Office",
+        "floors": "5th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Tom Szczepanski",
+            "title": "Sr Facilities Manager",
+            "office": "",
+            "emergency": "718-916-6112",
+            "email": "tom.szczepanski@spglobal.com"
+          },
+          {
+            "name": "Rudene Marshall",
+            "title": "Assistant Facilities Manager",
+            "office": "212-438-7943",
+            "emergency": "646-957-1446",
+            "email": "rudene.marshall@spglobal.com"
+          },
+          {
+            "name": "Skye Bleu Chevannes",
+            "title": "",
+            "office": "347-346-3099",
+            "emergency": "",
+            "email": "skye.bleu.chevannes@spglobal.com"
+          }
+        ]
+      },
+      {
+        "id": "jp-morgan-chase-subtt",
+        "name": "JP Morgan Chase (SubTT)",
+        "type": "Office",
+        "floors": "5th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Conor Anderson",
+            "title": "Facilities Manager",
+            "office": "570-807-0565",
+            "emergency": "",
+            "email": "conor.anderson@jpmchase.com"
+          },
+          {
+            "name": "Steven Smith",
+            "title": "Facilities Coordinator",
+            "office": "",
+            "emergency": "",
+            "email": "steven.smith@jpmchase.com"
+          },
+          {
+            "name": "Vaughn Woods",
+            "title": "Chief Engineer",
+            "office": "646-343-3916",
+            "emergency": "646-745-5605",
+            "email": "vaughn.woodsr@jpmchase.com"
+          }
+        ]
+      },
+      {
+        "id": "r-ga-media-group-inc",
+        "name": "R/GA Media Group Inc.",
+        "type": "Office",
+        "floors": "11th & 12th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Luis Rivera",
+            "title": "Director of Administration",
+            "office": "212-704-1311",
+            "emergency": "646-734-2578",
+            "email": "luis.rivera@interpublic.com"
+          }
+        ]
+      },
+      {
+        "id": "weworks-amazon-subtt",
+        "name": "Weworks-Amazon(SubTT)",
+        "type": "Office",
+        "floors": "12th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Ashley Grogg",
+            "title": "Amazon - Facilities Manager",
+            "office": "",
+            "emergency": "812-320-0943",
+            "email": "aggrogg@amazon.com"
+          }
+        ]
+      },
+      {
+        "id": "betterment-holdings-sub-subtt",
+        "name": "Betterment Holdings (Sub-SubTT)",
+        "type": "Office",
+        "floors": "11th",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Alexandra Price",
+            "title": "Senior Manager,Workplace Experience",
+            "office": "",
+            "emergency": "",
+            "email": "alexandra.price@betterment.com"
+          },
+          {
+            "name": "Kyle Dowd",
+            "title": "Workplace Experience Lead",
+            "office": "",
+            "emergency": "716-479-7758",
+            "email": "kyle.dowd@betterment.com"
+          },
+          {
+            "name": "Earl Grant",
+            "title": "Facilities Manager",
+            "office": "",
+            "emergency": "917-885-5949",
+            "email": "earl.grant@betterment.com"
+          },
+          {
+            "name": "Justin Joiner",
+            "title": "Senior Director of HR & Workplace Experience",
+            "office": "",
+            "emergency": "770-570-7818",
+            "email": "justin.joiner@betterment.com"
+          }
+        ]
+      },
+      {
+        "id": "city-national-bank",
+        "name": "City National Bank",
+        "type": "Retail",
+        "floors": "Mezz. Level",
+        "store": "Store: (917) 421-1730",
+        "contacts": [
+          {
+            "name": "",
+            "title": "24/7 Corp. Security Hotline",
+            "office": "",
+            "emergency": "213-427-5454",
+            "email": ""
+          },
+          {
+            "name": "Nic Longo",
+            "title": "Assistant Facilities Manager",
+            "office": "",
+            "emergency": "551-655-2028",
+            "email": "Nic.Longo@cbre.com"
+          },
+          {
+            "name": "Herman Mike",
+            "title": "Sr. Facility Manager",
+            "office": "",
+            "emergency": "551-225-7324",
+            "email": "herman.mike@jll.com"
+          },
+          {
+            "name": "Neetu Kaushal",
+            "title": "VP Branch Manager",
+            "office": "917-421-1732",
+            "emergency": "",
+            "email": "neetu.kaushal@cnb.com"
+          }
+        ]
+      },
+      {
+        "id": "peloton",
+        "name": "Peloton",
+        "type": "Retail",
+        "floors": "Studio, 3rd",
+        "store": "",
+        "contacts": [
+          {
+            "name": "Daron Garraway",
+            "title": "Global Director, Workplace Experience",
+            "office": "",
+            "emergency": "347-328-3517",
+            "email": "daron.garraway@onepeloton.com"
+          },
+          {
+            "name": "Che Dickerson",
+            "title": "Manager, Studio Facilities",
+            "office": "",
+            "emergency": "202-207-8267",
+            "email": "che.dickerson@onepeloton.com"
+          },
+          {
+            "name": "Shamiso Jones",
+            "title": "Sr.Workplace Specialist",
+            "office": "",
+            "emergency": "347-262-3172",
+            "email": "shamiso.jones@onepeloton.com"
+          },
+          {
+            "name": "Tanya Manso",
+            "title": "Workplace Coordinator",
+            "office": "",
+            "emergency": "917-463-4572",
+            "email": "tanya.manso@onepeloton.com"
+          },
+          {
+            "name": "Jabari Keitt",
+            "title": "Concierge",
+            "office": "",
+            "emergency": "347-925-2791",
+            "email": "jabari.keitt@onepeloton.com"
+          }
+        ]
+      },
+      {
+        "id": "spectrum-charter-suite-135",
+        "name": "Spectrum - Charter (Suite 135)",
+        "type": "Retail",
+        "floors": "",
+        "store": "Store: (888)406-7063",
+        "contacts": [
+          {
+            "name": "Millie Zhu",
+            "title": "Facilities Manager",
+            "office": "",
+            "emergency": "718-840-1547",
+            "email": "Millie.Zhu@Charter.com"
+          },
+          {
+            "name": "Sara Pereyra",
+            "title": "District Manager",
+            "office": "",
+            "emergency": "516-701-5337",
+            "email": "Sara.Pereyra@charter.com"
+          },
+          {
+            "name": "Heriberto Feliciano",
+            "title": "Facilities Specialist",
+            "office": "",
+            "emergency": "347-844-6710",
+            "email": "Heriberto.Feliciano@charter.com"
+          },
+          {
+            "name": "Karen Kowalsky",
+            "title": "Facilities Director",
+            "office": "",
+            "emergency": "347-306-8964",
+            "email": "Karen.Kowalsky@charter.com"
+          },
+          {
+            "name": "Kwasic Brown",
+            "title": "Store Operations",
+            "office": "",
+            "emergency": "917-731-9178",
+            "email": "Kwasic.Brown@charter.com"
+          }
+        ]
+      },
+      {
+        "id": "whole-foods-market",
+        "name": "Whole Foods Market",
+        "type": "Retail",
+        "floors": "",
+        "store": "Store: (646)540-1104",
+        "contacts": [
+          {
+            "name": "",
+            "title": "",
+            "office": "",
+            "emergency": "",
+            "email": "mhwstoreleadership@wholefoods.com"
+          },
+          {
+            "name": "Omar Tejada",
+            "title": "Store Team Leader",
+            "office": "646-540-1104",
+            "emergency": "267-756-3587",
+            "email": "omar.tejada@wholefoods.com"
+          },
+          {
+            "name": "Alex Saa",
+            "title": "Associate Store Team Leader",
+            "office": "646-540-1104",
+            "emergency": "718-406-2577",
+            "email": "alex.saa@wholefoods.com"
+          },
+          {
+            "name": "Yotham Rivers",
+            "title": "Associate Store Team Leader",
+            "office": "646-540-1104",
+            "emergency": "718-775-5247",
+            "email": "Yotham.Rivers@wholefoods.com"
+          },
+          {
+            "name": "Harvey Rodriguez",
+            "title": "Associate Store Team Leader",
+            "office": "646-540-1104",
+            "emergency": "346-716-3349",
+            "email": "Harvey.Rodriguez@wholefoods.com"
+          },
+          {
+            "name": "Tito Soto",
+            "title": "Associate Store Team Leader",
+            "office": "646-540-1104",
+            "emergency": "213-938-2067",
+            "email": "Tito.Soto@wholefoods.com"
+          }
+        ]
+      }
+    ]
+  }
+};
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let currentScreen = 'screen-home';
+let activeIncidentId = null;
+let adminContext = { incidentId: null, roleId: null };
+let checklist = {};  // { 'incidentId-roleId-actionId': true/false }
+
+function saveData() {
+  try { localStorage.setItem('ahp-data', JSON.stringify(appData)); } catch(e) {}
+}
+function loadData() {
+  try {
+    const saved = localStorage.getItem('ahp-data');
+    if (saved) appData = JSON.parse(saved);
+  } catch(e) {}
+  // Backfill new reference sections for existing installs (non-destructive:
+  // only fills when the key is absent, so admin edits/clears are preserved).
+  if (!appData.sections) appData.sections = {};
+  let _migrated = false;
+  if (appData.sections.bic === undefined) { appData.sections.bic = JSON.parse(JSON.stringify(DEFAULT_DATA.sections.bic)); _migrated = true; }
+  if (appData.sections.tenants === undefined) { appData.sections.tenants = JSON.parse(JSON.stringify(DEFAULT_DATA.sections.tenants)); _migrated = true; }
+  if (_migrated) saveData();
+  try {
+    const cl = localStorage.getItem('ahp-checklist');
+    if (cl) checklist = JSON.parse(cl);
+  } catch(e) {}
+}
+function saveChecklist() {
+  try { localStorage.setItem('ahp-checklist', JSON.stringify(checklist)); } catch(e) {}
+}
+
+// ─────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────
+function navigate(id) {
+  document.getElementById(currentScreen).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  currentScreen = id;
+}
+
+function showAdminGate() {
+  const loggedIn = sessionStorage.getItem('ahp-admin') === 'true';
+  if (loggedIn) {
+    navigate('screen-admin');
+    adminNav('home');
+  }
+  else navigate('screen-admin-gate');
+}
+
+// ─────────────────────────────────────────
+// INCIDENT DETAIL (user view)
+// ─────────────────────────────────────────
+function openIncident(id) {
+  activeIncidentId = id;
+  const inc = appData.incidents[id];
+  if (!inc) return;
+
+  document.getElementById('detail-icon').textContent = inc.icon;
+  document.getElementById('detail-name').textContent = inc.name;
+  document.getElementById('detail-tagline').textContent = inc.tagline || '';
+  document.getElementById('detail-def-text').innerHTML = inc.definition || '<em>No definition provided.</em>';
+
+  // Announcements
+  const annWrap = document.getElementById('detail-announce-content');
+  if (!inc.announcements || inc.announcements.length === 0) {
+    annWrap.innerHTML = '<div class="no-announce">No announcements required for this incident.</div>';
+  } else {
+    annWrap.innerHTML = inc.announcements.map(a => `
+      <div class="announcement-box">
+        <div class="announcement-label">📣 ${a.title}</div>
+        <div class="announcement-script">"${a.script}"</div>
+      </div>
+    `).join('');
+  }
+
+  // Roles & actions
+  const rolesWrap = document.getElementById('detail-roles-container');
+  rolesWrap.innerHTML = '';
+  (inc.roles || []).forEach(role => {
+    const actionCount = (role.actions || []).length;
+    const doneCount = (role.actions || []).filter(a => checklist[`${id}-${role.id}-${a.id}`]).length;
+    const pct = actionCount ? Math.round(doneCount / actionCount * 100) : 0;
+
+    const block = document.createElement('div');
+    block.className = 'role-block';
+    block.dataset.roleId = role.id;
+
+    block.innerHTML = `
+      <div class="role-block-header" onclick="toggleRoleBlock(this)">
+        <div class="role-block-left">
+          <div class="role-dot" style="background:${role.color};"></div>
+          <div>
+            <div class="role-block-name">${role.name}</div>
+            <div class="role-block-count">${actionCount} action${actionCount !== 1 ? 's' : ''} · ${doneCount}/${actionCount} complete</div>
+          </div>
+        </div>
+        <div class="role-chevron">›</div>
+      </div>
+      <div class="role-actions">
+        <div class="role-progress-strip">
+          <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+          <div class="progress-label">${doneCount} / ${actionCount}</div>
+        </div>
+        <div class="action-steps-list">
+          ${(role.actions || []).map((a, i) => renderActionStep(id, role.id, a, i + 1)).join('')}
+        </div>
+      </div>
+    `;
+    rolesWrap.appendChild(block);
+  });
+
+  // Contacts
+  const contactList = document.getElementById('detail-contact-list');
+  const contacts = (inc.contacts || []).filter(c => (c.label || '').trim() || (c.number || '').trim());
+  if (contacts.length === 0) {
+    contactList.innerHTML = '<div class="contact-empty">No contacts configured for this incident.</div>';
+  } else {
+    contactList.innerHTML = contacts.map(c => `
+      <div class="contact-item">
+        <div class="contact-item-label">${c.label}</div>
+        <a href="tel:${(c.number||'').replace(/\D/g,'')}" class="contact-item-num${c.emergency ? ' emergency' : ''}">${c.number}</a>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('active-dot').style.display = 'block';
+  navigate('screen-incident-detail');
+}
+
+function renderActionStep(incId, roleId, action, stepNum) {
+  const key = `${incId}-${roleId}-${action.id}`;
+  const done = !!checklist[key];
+  return `
+    <div class="action-step${done ? ' completed' : ''}${action.critical ? ' critical' : ''}" id="step-${key.replace(/[^a-z0-9]/gi,'_')}">
+      <div class="action-step-main">
+        <div class="step-cb${done ? ' checked' : ''}" onclick="toggleAction('${incId}','${roleId}','${action.id}',this)">
+          <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 6 5 9.5 10.5 2.5"/></svg>
+        </div>
+        <div class="step-content">
+          <div class="step-num">Step ${stepNum}${action.critical ? ' · 🚨 Critical' : ''}</div>
+          <div class="step-text${action.critical ? ' danger' : ''}">${action.text}</div>
+        </div>
+      </div>
+      <div class="step-expand" onclick="toggleStepDetail(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        How &amp; Why
+      </div>
+      <div class="step-detail">
+        ${action.how ? `<div class="step-detail-row"><div class="step-detail-label">📡 How</div><div class="step-detail-text">${action.how}</div></div>` : ''}
+        ${action.why ? `<div class="step-detail-row"><div class="step-detail-label">💡 Why</div><div class="step-detail-text">${action.why}</div></div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function toggleRoleBlock(header) {
+  const chevron = header.querySelector('.role-chevron');
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
+}
+
+function toggleStepDetail(btn) {
+  const detail = btn.nextElementSibling;
+  const isOpen = detail.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+
+function toggleAction(incId, roleId, actionId, cb) {
+  const key = `${incId}-${roleId}-${actionId}`;
+  const done = cb.classList.toggle('checked');
+  checklist[key] = done;
+  saveChecklist();
+  const stepEl = document.getElementById('step-' + key.replace(/[^a-z0-9]/gi,'_'));
+  if (stepEl) stepEl.classList.toggle('completed', done);
+  // Update progress strip
+  const inc = appData.incidents[incId];
+  const role = (inc.roles || []).find(r => r.id === roleId);
+  if (role) {
+    const total = role.actions.length;
+    const done2 = role.actions.filter(a => checklist[`${incId}-${roleId}-${a.id}`]).length;
+    const pct = total ? Math.round(done2 / total * 100) : 0;
+    const block = document.querySelector(`.role-block[data-role-id="${roleId}"]`);
+    if (block) {
+      block.querySelector('.progress-bar-fill').style.width = pct + '%';
+      block.querySelector('.progress-label').textContent = `${done2} / ${total}`;
+      block.querySelector('.role-block-count').textContent = `${total} action${total !== 1 ? 's' : ''} · ${done2}/${total} complete`;
+    }
+  }
+}
+
+function confirmResetChecklist() {
+  const inc = appData.incidents[activeIncidentId];
+  if (!inc) return;
+  const checkedCount = Object.keys(checklist).filter(k => k.startsWith(activeIncidentId + '-') && checklist[k]).length;
+  if (checkedCount === 0) { showToast('No steps checked yet'); return; }
+  pendingDeleteId = '__reset__';
+  document.getElementById('modal-title').textContent = 'Reset Checklist?';
+  document.getElementById('modal-body').textContent = inc.name;
+  document.getElementById('modal-warning').textContent = `This clears all ${checkedCount} checked step${checkedCount !== 1 ? 's' : ''} for this incident. Response content is not affected.`;
+  const btn = document.getElementById('modal-confirm-btn');
+  btn.textContent = 'Reset Checklist';
+  btn.onclick = function() {
+    resetIncidentChecklist();
+    closeModal();
+    resetModalBtn();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function resetIncidentChecklist() {
+  Object.keys(checklist).forEach(k => {
+    if (k.startsWith(activeIncidentId + '-')) delete checklist[k];
+  });
+  saveChecklist();
+  openIncident(activeIncidentId);
+  showToast('Checklist reset', 'success');
+}
+
+// ─────────────────────────────────────────
+// INCIDENT LIST (user view)
+// ─────────────────────────────────────────
+function renderIncidentList() {
+  const container = document.getElementById('incident-list-container');
+  const searchEl = document.getElementById('incident-search');
+  const q = (searchEl ? searchEl.value : '').trim().toLowerCase();
+  let incidents = Object.values(appData.incidents).sort((a, b) => a.name.localeCompare(b.name));
+  if (q) {
+    incidents = incidents.filter(inc =>
+      (inc.name || '').toLowerCase().includes(q) ||
+      (inc.tagline || '').toLowerCase().includes(q) ||
+      (inc.definition || '').toLowerCase().includes(q)
+    );
+  }
+  let html = incidents.map(inc => `
+    <button class="incident-card" onclick="openIncident('${inc.id}')">
+      <div class="incident-card-icon" style="background:rgba(46,81,144,0.25);">${inc.icon}</div>
+      <div class="incident-card-body">
+        <div class="incident-card-name">${inc.name}</div>
+        <div class="incident-card-desc">${inc.tagline || inc.definition?.substring(0,80) + '...' || ''}</div>
+      </div>
+      <div class="incident-card-arrow">›</div>
+    </button>
+  `).join('');
+  if (q && incidents.length === 0) {
+    html = `<div class="incident-no-results">No incidents match “${q}”.<br>Try a different term.</div>`;
+  } else if (!q) {
+    html += `<div class="empty-placeholder">Additional incident types added by Admin will appear here</div>`;
+  }
+  container.innerHTML = html;
+}
+
+// ─────────────────────────────────────────
+// ADMIN — LOGIN / LOGOUT
+// ─────────────────────────────────────────
+function adminLogin() {
+  const u = document.getElementById('admin-user').value.trim();
+  const p = document.getElementById('admin-pass').value;
+  const ADMIN_USER = 'jparham087@gmail.com';
+  const ADMIN_PASS = '5MW10001';
+  const custom = localStorage.getItem('ahp-admin-pass'); // optional Settings-set password
+  if (u.toLowerCase() === ADMIN_USER && (p === ADMIN_PASS || (custom && p === custom))) {
+    sessionStorage.setItem('ahp-admin', 'true');
+    navigate('screen-admin');
+    adminNav('home');
+    showToast('Signed in as Administrator', 'success');
+  } else {
+    showToast('Invalid credentials');
+  }
+}
+function adminLogout() {
+  sessionStorage.removeItem('ahp-admin');
+  navigate('screen-home');
+  showToast('Signed out');
+}
+document.addEventListener('keydown', e => {
+  if (currentScreen === 'screen-admin-gate' && e.key === 'Enter') adminLogin();
+});
+
+// ─────────────────────────────────────────
+// ADMIN — VIEW NAVIGATION (breadcrumb)
+// ─────────────────────────────────────────
+const ALL_ADMIN_VIEWS = ['av-home','av-incidents','av-incident-sections','av-definition','av-announcements','av-roles','av-role-actions','av-contacts','av-app-intro','av-eap-announce','av-building-info','av-floor-plans','av-resources','av-settings'];
+
+function showAdminView(viewId) {
+  ALL_ADMIN_VIEWS.forEach(v => {
+    document.getElementById(v).classList.remove('active');
+  });
+  document.getElementById(viewId).classList.add('active');
+}
+
+function adminNav(level, incidentId, roleId) {
+  const bc = document.getElementById('admin-breadcrumb');
+
+  if (level === 'home') {
+    adminContext = { incidentId: null, roleId: null };
+    bc.innerHTML = `<span class="bc-item active">Admin Home</span>`;
+    showAdminView('av-home');
+
+  } else if (level === 'incidents') {
+    adminContext = { incidentId: null, roleId: null };
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Incidents</span>`;
+    renderAdminIncidentList();
+    showAdminView('av-incidents');
+
+  } else if (level === 'incident-sections') {
+    adminContext.incidentId = incidentId;
+    const inc = appData.incidents[incidentId];
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item active">${inc.name}</span>`;
+    renderAdminSections(incidentId);
+    showAdminView('av-incident-sections');
+
+  } else if (level === 'definition') {
+    const inc = appData.incidents[adminContext.incidentId];
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incident-sections','${adminContext.incidentId}')">${inc.name}</span><span class="bc-sep">›</span><span class="bc-item active">Definition</span>`;
+    document.getElementById('edit-definition').value = inc.definition || '';
+    showAdminView('av-definition');
+
+  } else if (level === 'announcements') {
+    const inc = appData.incidents[adminContext.incidentId];
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incident-sections','${adminContext.incidentId}')">${inc.name}</span><span class="bc-sep">›</span><span class="bc-item active">Announcements</span>`;
+    renderAdminAnnouncements(adminContext.incidentId);
+    showAdminView('av-announcements');
+
+  } else if (level === 'roles') {
+    const inc = appData.incidents[adminContext.incidentId];
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incident-sections','${adminContext.incidentId}')">${inc.name}</span><span class="bc-sep">›</span><span class="bc-item active">Roles</span>`;
+    renderAdminRoles(adminContext.incidentId);
+    showAdminView('av-roles');
+
+  } else if (level === 'role-actions') {
+    adminContext.roleId = roleId;
+    const inc = appData.incidents[adminContext.incidentId];
+    const role = inc.roles.find(r => r.id === roleId);
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incident-sections','${adminContext.incidentId}')">${inc.name}</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('roles')">Roles</span><span class="bc-sep">›</span><span class="bc-item active">${role.name}</span>`;
+    renderAdminRoleActions(adminContext.incidentId, roleId);
+    showAdminView('av-role-actions');
+
+  } else if (level === 'contacts') {
+    const inc = appData.incidents[adminContext.incidentId];
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incidents')">Incidents</span><span class="bc-sep">›</span><span class="bc-item" onclick="adminNav('incident-sections','${adminContext.incidentId}')">${inc.name}</span><span class="bc-sep">›</span><span class="bc-item active">Contacts</span>`;
+    renderAdminContacts(adminContext.incidentId);
+    showAdminView('av-contacts');
+
+  } else if (level === 'app-intro') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">App Introduction</span>`;
+    const d = appData.sections?.intro || {};
+    document.getElementById('set-intro-title').value = d.title || '';
+    document.getElementById('set-intro-body').value = d.body || '';
+    showAdminView('av-app-intro');
+
+  } else if (level === 'eap-announce') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Announce the EAP</span>`;
+    renderEapAnnouncements();
+    showAdminView('av-eap-announce');
+
+  } else if (level === 'building-info') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Building Info</span>`;
+    const d = appData.sections?.buildingInfo || {};
+    document.getElementById('set-bld-name').value = d.name || appData.buildingName || '';
+    document.getElementById('set-bld-address').value = d.address || '';
+    document.getElementById('set-bld-owner').value = d.owner || '';
+    document.getElementById('set-bld-notes').value = d.notes || '';
+    showAdminView('av-building-info');
+
+  } else if (level === 'floor-plans') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Floor Plans</span>`;
+    renderFloorPlans();
+    showAdminView('av-floor-plans');
+
+  } else if (level === 'resources') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Additional Resources</span>`;
+    renderResources();
+    showAdminView('av-resources');
+
+  } else if (level === 'settings') {
+    bc.innerHTML = `<span class="bc-item" onclick="adminNav('home')">Admin Home</span><span class="bc-sep">›</span><span class="bc-item active">Settings</span>`;
+    document.getElementById('set-app-building').value = appData.buildingName || '';
+    showAdminView('av-settings');
+  }
+}
+
+// ─────────────────────────────────────────
+// ADMIN — RENDER FUNCTIONS
+// ─────────────────────────────────────────
+function renderAdminIncidentList() {
+  const list = document.getElementById('admin-incident-list');
+  const sorted = Object.values(appData.incidents).sort((a, b) => a.name.localeCompare(b.name));
+  list.innerHTML = sorted.map(inc => `
+    <div class="admin-list-item" style="cursor:default;">
+      <button onclick="adminNav('incident-sections','${inc.id}')" style="display:flex;align-items:center;gap:12px;flex:1;text-align:left;">
+        <span style="font-size:22px;">${inc.icon}</span>
+        <div class="admin-list-item-body">
+          <div class="admin-list-item-name">${inc.name}</div>
+          <div class="admin-list-item-sub">${(inc.roles||[]).length} roles · ${(inc.announcements||[]).length} announcement${(inc.announcements||[]).length !== 1 ? 's' : ''}</div>
+        </div>
+        <div class="admin-list-arrow">›</div>
+      </button>
+      <button class="btn-danger" style="flex-shrink:0;margin-left:6px;" onclick="confirmDeleteIncident('${inc.id}')">🗑</button>
+    </div>
+  `).join('');
+}
+
+function renderAdminSections(incidentId) {
+  const inc = appData.incidents[incidentId];
+  const cards = document.getElementById('admin-section-cards');
+  cards.innerHTML = `
+    <!-- ── Incident Identity Editor ── -->
+    <div class="announce-edit-card" style="margin-bottom:4px;">
+      <div class="announce-edit-header">
+        <div class="announce-edit-title" style="color:var(--gold-400);">Incident Identity</div>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Incident Name</div>
+        <input class="form-input" id="inc-name-${incidentId}" value="${inc.name}" placeholder="e.g. Elevator Entrapment" style="padding:9px 12px;font-size:14px;font-weight:700;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Icon (emoji)</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input class="form-input" id="inc-icon-${incidentId}" value="${inc.icon}" placeholder="🚨" style="padding:9px 12px;font-size:20px;width:80px;flex-shrink:0;"/>
+          <button class="btn-json" style="flex:1;padding:10px;" onclick="openEmojiPicker('${incidentId}')">Browse Icons 🎨</button>
+        </div>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Tagline (short summary)</div>
+        <input class="form-input" id="inc-tagline-${incidentId}" value="${inc.tagline || ''}" placeholder="e.g. Not dangerous — treat as emergency" style="padding:9px 12px;font-size:13px;"/>
+      </div>
+      <button class="btn-save" onclick="saveIncidentIdentity('${incidentId}')">Save Name &amp; Icon</button>
+    </div>
+
+    <!-- ── Section Navigation ── -->
+    <button class="section-card" onclick="adminNav('definition')">
+      <div class="section-card-header">
+        <div class="section-card-icon">📋</div>
+        <div style="flex:1;margin-left:10px;">
+          <div class="section-card-title">Definition</div>
+          <div class="section-card-sub">${inc.definition ? inc.definition.substring(0,60) + '…' : 'Not set'}</div>
+        </div>
+        <div class="section-card-arrow">›</div>
+      </div>
+    </button>
+
+    <button class="section-card" onclick="adminNav('announcements')">
+      <div class="section-card-header">
+        <div class="section-card-icon">📢</div>
+        <div style="flex:1;margin-left:10px;">
+          <div class="section-card-title">Announcements</div>
+          <div class="section-card-sub">${(inc.announcements||[]).length} script${(inc.announcements||[]).length !== 1 ? 's' : ''} configured</div>
+        </div>
+        <div class="section-card-arrow">›</div>
+      </div>
+    </button>
+
+    <button class="section-card" onclick="adminNav('roles')">
+      <div class="section-card-header">
+        <div class="section-card-icon">👥</div>
+        <div style="flex:1;margin-left:10px;">
+          <div class="section-card-title">Roles &amp; Response Actions</div>
+          <div class="section-card-sub">${(inc.roles||[]).length} role${(inc.roles||[]).length !== 1 ? 's' : ''} · tap to manage actions per role</div>
+        </div>
+        <div class="section-card-arrow">›</div>
+      </div>
+    </button>
+
+    <button class="section-card" onclick="adminNav('contacts')">
+      <div class="section-card-header">
+        <div class="section-card-icon">📞</div>
+        <div style="flex:1;margin-left:10px;">
+          <div class="section-card-title">Quick Contacts</div>
+          <div class="section-card-sub">${(inc.contacts||[]).length} contact${(inc.contacts||[]).length !== 1 ? 's' : ''} configured</div>
+        </div>
+        <div class="section-card-arrow">›</div>
+      </div>
+    </button>
+  `;
+}
+
+function renderAdminAnnouncements(incidentId) {
+  const inc = appData.incidents[incidentId];
+  const list = document.getElementById('admin-announce-list');
+  list.innerHTML = `<div class="info-box">Each announcement is a verbal script read aloud by the FLS Director or designated staff over the PA or intercom.</div>`;
+  (inc.announcements || []).forEach((ann, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div class="announce-edit-title">Announcement ${i + 1}</div>
+        <button class="btn-danger" onclick="confirmDeleteAnnouncement('${incidentId}','${ann.id}','${ann.title.replace(/'/g,"\\'")}')">🗑 Delete</button>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Title</div>
+        <input class="form-input" id="ann-title-${ann.id}" value="${ann.title}" style="padding:9px 12px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Script (word-for-word)</div>
+        <textarea class="form-textarea" id="ann-script-${ann.id}">${ann.script}</textarea>
+      </div>
+      <button class="btn-save" onclick="saveAnnouncement('${incidentId}','${ann.id}')">Save</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function renderAdminRoles(incidentId) {
+  const inc = appData.incidents[incidentId];
+  const list = document.getElementById('admin-role-list');
+  list.innerHTML = `<div class="info-box">Tap a role name to edit it inline. Tap › to manage its Response Actions.</div>`;
+  (inc.roles || []).forEach(role => {
+    const count = (role.actions || []).length;
+    const row = document.createElement('div');
+    row.className = 'admin-list-item';
+    row.style.cssText = 'cursor:default;flex-direction:column;align-items:stretch;padding:0;overflow:hidden;';
+    row.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;">
+        <div class="role-dot" style="background:${role.color};width:12px;height:12px;border-radius:50%;flex-shrink:0;cursor:pointer;" onclick="openRoleColorEdit('${incidentId}','${role.id}',this)" title="Change color"></div>
+        <div style="flex:1;min-width:0;">
+          <input
+            class="form-input"
+            id="role-name-input-${role.id}"
+            value="${role.name}"
+            style="padding:6px 8px;font-size:13px;font-weight:700;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.08);"
+            onchange="saveRoleName('${incidentId}','${role.id}',this.value)"
+          />
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;padding-left:2px;">${count} response action${count !== 1 ? 's' : ''}</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+          <button class="btn-danger" style="padding:6px 10px;font-size:13px;" onclick="confirmDeleteRole('${incidentId}','${role.id}')">🗑</button>
+          <button onclick="adminNav('role-actions',null,'${role.id}')" style="color:var(--gray-400);font-size:22px;padding:4px 6px;">›</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function saveRoleName(incidentId, roleId, newName) {
+  if (!newName.trim()) return;
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  if (role) { role.name = newName.trim(); saveData(); showToast('Role name saved', 'success'); }
+}
+
+function openRoleColorEdit(incidentId, roleId, dotEl) {
+  // Reuse role modal for color change only
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  if (!role) return;
+  document.getElementById('new-role-name').value = role.name;
+  selectedRoleColor = role.color;
+  document.querySelectorAll('.color-swatch').forEach(s => {
+    s.classList.toggle('selected', s.dataset.color === role.color);
+  });
+  // Override confirm to update color only
+  const confirmBtn = document.querySelector('#role-modal .btn-confirm-delete');
+  confirmBtn.textContent = 'Update Color';
+  confirmBtn.onclick = function() {
+    role.color = selectedRoleColor;
+    role.name = document.getElementById('new-role-name').value.trim() || role.name;
+    saveData();
+    renderAdminRoles(incidentId);
+    closeRoleModal();
+    confirmBtn.textContent = 'Add Role';
+    confirmBtn.onclick = confirmAddRole;
+    showToast('Role updated', 'success');
+  };
+  document.getElementById('role-modal').classList.add('open');
+}
+
+function confirmDeleteRole(incidentId, roleId) {
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  if (!role) return;
+  pendingDeleteId = '__role__';
+  document.getElementById('modal-title').textContent = `Delete "${role.name}"?`;
+  document.getElementById('modal-body').textContent = 'This will permanently remove this role and all of its response actions.';
+  document.getElementById('modal-warning').textContent = `All ${(role.actions||[]).length} response action${(role.actions||[]).length !== 1 ? 's' : ''} under "${role.name}" will be deleted. This cannot be undone.`;
+  document.getElementById('modal-confirm-btn').textContent = 'Delete Role';
+  document.getElementById('modal-confirm-btn').onclick = function() {
+    appData.incidents[incidentId].roles = appData.incidents[incidentId].roles.filter(r => r.id !== roleId);
+    saveData();
+    renderAdminRoles(incidentId);
+    closeModal();
+    document.getElementById('modal-confirm-btn').textContent = 'Delete Permanently';
+    document.getElementById('modal-confirm-btn').onclick = executeDeleteIncident;
+    showToast('Role deleted');
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function renderAdminRoleActions(incidentId, roleId) {
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  const list = document.getElementById('admin-action-list');
+  list.innerHTML = `<div class="info-box">Edit response actions for <strong>${role.name}</strong>. Each action includes what to do, how to do it, and why.</div>`;
+  (role.actions || []).forEach((action, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.id = 'action-card-' + action.id;
+    card.style.border = action.critical ? '1px solid rgba(192,57,43,0.4)' : '1px solid rgba(255,255,255,0.07)';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:10px;font-weight:700;color:var(--gold-500);text-transform:uppercase;letter-spacing:0.06em;">Step ${i + 1}</span>
+          ${action.critical ? '<span style="font-size:10px;font-weight:700;color:var(--red-400);">🚨 CRITICAL</span>' : ''}
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <label style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--red-400);">
+            <input type="checkbox" id="crit-${action.id}" ${action.critical ? 'checked' : ''} onchange="setActionCritical('${incidentId}','${roleId}','${action.id}',this.checked)" style="accent-color:var(--red-500);"/>
+            Critical
+          </label>
+          <button class="btn-danger" onclick="confirmDeleteAction('${incidentId}','${roleId}','${action.id}','${action.text.substring(0,30).replace(/'/g,"\'")}')">🗑</button>
+        </div>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Action (What to Do)</div>
+        <textarea class="form-textarea" id="act-text-${action.id}">${action.text}</textarea>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">How</div>
+        <textarea class="form-textarea" id="act-how-${action.id}" style="min-height:56px;">${action.how || ''}</textarea>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Why</div>
+        <textarea class="form-textarea" id="act-why-${action.id}" style="min-height:56px;">${action.why || ''}</textarea>
+      </div>
+      <button class="btn-save" onclick="saveAction('${incidentId}','${roleId}','${action.id}')">Save Step ${i+1}</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function confirmDeleteAction(incidentId, roleId, actionId, preview) {
+  pendingDeleteId = '__action__';
+  document.getElementById('modal-title').textContent = 'Delete Response Action?';
+  document.getElementById('modal-body').textContent = preview ? `"${preview}…"` : 'This response action will be permanently removed.';
+  document.getElementById('modal-warning').textContent = 'This action and all its HOW / WHY content will be deleted. This cannot be undone.';
+  document.getElementById('modal-confirm-btn').textContent = 'Delete Action';
+  document.getElementById('modal-confirm-btn').onclick = function() {
+    deleteAction(incidentId, roleId, actionId);
+    closeModal();
+    document.getElementById('modal-confirm-btn').textContent = 'Delete Permanently';
+    document.getElementById('modal-confirm-btn').onclick = executeDeleteIncident;
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+// ─────────────────────────────────────────
+// ADMIN — SAVE / ADD / DELETE
+// ─────────────────────────────────────────
+function saveDefinition() {
+  const id = adminContext.incidentId;
+  appData.incidents[id].definition = document.getElementById('edit-definition').value.trim();
+  saveData();
+  renderIncidentList();
+  showToast('Definition saved', 'success');
+}
+
+function saveAnnouncement(incidentId, annId) {
+  const inc = appData.incidents[incidentId];
+  const ann = inc.announcements.find(a => a.id === annId);
+  if (ann) {
+    ann.title = document.getElementById(`ann-title-${annId}`).value.trim();
+    ann.script = document.getElementById(`ann-script-${annId}`).value.trim();
+  }
+  saveData();
+  showToast('Announcement saved', 'success');
+}
+
+function confirmDeleteAnnouncement(incidentId, annId, title) {
+  pendingDeleteId = '__ann__';
+  document.getElementById('modal-title').textContent = `Delete Announcement?`;
+  document.getElementById('modal-body').textContent = `"${title}"`;
+  document.getElementById('modal-warning').textContent = 'This announcement script will be permanently deleted.';
+  document.getElementById('modal-confirm-btn').textContent = 'Delete Announcement';
+  document.getElementById('modal-confirm-btn').onclick = function() {
+    deleteAnnouncement(incidentId, annId);
+    closeModal();
+    document.getElementById('modal-confirm-btn').textContent = 'Delete Permanently';
+    document.getElementById('modal-confirm-btn').onclick = executeDeleteIncident;
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function deleteAnnouncement(incidentId, annId) {
+  appData.incidents[incidentId].announcements = appData.incidents[incidentId].announcements.filter(a => a.id !== annId);
+  saveData();
+  renderAdminAnnouncements(incidentId);
+  showToast('Announcement deleted');
+}
+
+function adminAddAnnouncement() {
+  const id = adminContext.incidentId;
+  const newId = 'ann-' + Date.now();
+  appData.incidents[id].announcements.push({ id: newId, title: 'New Announcement', script: '' });
+  saveData();
+  renderAdminAnnouncements(id);
+  showToast('Announcement added', 'success');
+}
+
+// ── Incident Contacts (Quick Contacts) ──
+function renderAdminContacts(incidentId) {
+  const inc = appData.incidents[incidentId];
+  if (!inc.contacts) inc.contacts = [];
+  const list = document.getElementById('admin-contact-list');
+  list.innerHTML = `<div class="info-box">These appear in the Quick Contacts bar at the bottom of the incident screen. Tap-to-call uses the number exactly as entered. Mark life-safety / 911-type lines as Emergency to highlight them in red.</div>`;
+  inc.contacts.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div class="announce-edit-title">Contact ${i + 1}</div>
+        <button class="btn-danger" onclick="confirmDeleteContact('${incidentId}',${i})">🗑 Delete</button>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Label</div>
+        <input class="form-input" id="contact-label-${i}" value="${(c.label || '').replace(/"/g,'&quot;')}" placeholder="e.g. Security Operations Center" style="padding:9px 12px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Phone Number</div>
+        <input class="form-input" id="contact-number-${i}" value="${(c.number || '').replace(/"/g,'&quot;')}" placeholder="e.g. 646-906-8441" inputmode="tel" style="padding:9px 12px;font-size:13px;"/>
+      </div>
+      <label class="contact-emergency-toggle">
+        <input type="checkbox" id="contact-emergency-${i}" ${c.emergency ? 'checked' : ''}/>
+        <span>Emergency line (highlight in red)</span>
+      </label>
+      <button class="btn-save" onclick="saveContact('${incidentId}',${i})">Save</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function saveContact(incidentId, index) {
+  const inc = appData.incidents[incidentId];
+  const c = (inc.contacts || [])[index];
+  if (!c) return;
+  c.label = document.getElementById(`contact-label-${index}`).value.trim();
+  c.number = document.getElementById(`contact-number-${index}`).value.trim();
+  c.emergency = document.getElementById(`contact-emergency-${index}`).checked;
+  saveData();
+  showToast('Contact saved', 'success');
+}
+
+function confirmDeleteContact(incidentId, index) {
+  const c = (appData.incidents[incidentId].contacts || [])[index];
+  const label = c && c.label ? c.label : `Contact ${index + 1}`;
+  pendingDeleteId = '__contact__';
+  document.getElementById('modal-title').textContent = 'Delete Contact?';
+  document.getElementById('modal-body').textContent = label;
+  document.getElementById('modal-warning').textContent = 'This contact will be permanently removed from the incident.';
+  const btn = document.getElementById('modal-confirm-btn');
+  btn.textContent = 'Delete Contact';
+  btn.onclick = function() {
+    deleteContact(incidentId, index);
+    closeModal();
+    resetModalBtn();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function deleteContact(incidentId, index) {
+  const inc = appData.incidents[incidentId];
+  inc.contacts = (inc.contacts || []).filter((_, i) => i !== index);
+  saveData();
+  renderAdminContacts(incidentId);
+  showToast('Contact deleted');
+}
+
+function adminAddContact() {
+  const id = adminContext.incidentId;
+  const inc = appData.incidents[id];
+  if (!inc.contacts) inc.contacts = [];
+  inc.contacts.push({ label: '', number: '', emergency: false });
+  saveData();
+  renderAdminContacts(id);
+  showToast('Contact added', 'success');
+}
+
+function saveAction(incidentId, roleId, actionId) {
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  const action = role.actions.find(a => a.id === actionId);
+  if (action) {
+    action.text = document.getElementById(`act-text-${actionId}`).value.trim();
+    action.how = document.getElementById(`act-how-${actionId}`).value.trim();
+    action.why = document.getElementById(`act-why-${actionId}`).value.trim();
+  }
+  saveData();
+  showToast('Action saved', 'success');
+}
+
+function setActionCritical(incidentId, roleId, actionId, val) {
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  const action = role.actions.find(a => a.id === actionId);
+  if (action) action.critical = val;
+  saveData();
+}
+
+function deleteAction(incidentId, roleId, actionId) {
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  role.actions = role.actions.filter(a => a.id !== actionId);
+  saveData();
+  renderAdminRoleActions(incidentId, roleId);
+  showToast('Action deleted');
+}
+
+function adminAddAction() {
+  const incidentId = adminContext.incidentId;
+  const roleId = adminContext.roleId;
+  const inc = appData.incidents[incidentId];
+  const role = inc.roles.find(r => r.id === roleId);
+  const newId = 'act-' + Date.now();
+  role.actions.push({ id: newId, stepNum: role.actions.length + 1, text: '', how: '', why: '', critical: false });
+  saveData();
+  renderAdminRoleActions(incidentId, roleId);
+  showToast('Action added', 'success');
+}
+
+let selectedRoleColor = '#e74c3c';
+
+function adminAddRole() {
+  document.getElementById('new-role-name').value = '';
+  selectedRoleColor = '#e74c3c';
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  const first = document.querySelector('.color-swatch');
+  if (first) first.classList.add('selected');
+  const confirmBtn = document.querySelector('#role-modal .btn-confirm-delete');
+  confirmBtn.textContent = 'Add Role';
+  confirmBtn.onclick = confirmAddRole;
+  document.getElementById('role-modal').classList.add('open');
+}
+
+function selectRoleColor(el) {
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedRoleColor = el.dataset.color;
+}
+
+function closeRoleModal() {
+  document.getElementById('role-modal').classList.remove('open');
+}
+
+function confirmAddRole() {
+  const name = document.getElementById('new-role-name').value.trim();
+  if (!name) { showToast('Enter a role name'); return; }
+  const incidentId = adminContext.incidentId;
+  const inc = appData.incidents[incidentId];
+  const newId = 'role-' + Date.now();
+  inc.roles.push({ id: newId, name, color: selectedRoleColor, actions: [] });
+  saveData();
+  renderAdminRoles(incidentId);
+  closeRoleModal();
+  // reset modal button
+  const confirmBtn = document.querySelector('#role-modal .btn-confirm-delete');
+  confirmBtn.textContent = 'Add Role';
+  confirmBtn.onclick = confirmAddRole;
+  showToast(`"${name}" role added`, 'success');
+}
+
+function saveIncidentIdentity(incidentId) {
+  const inc = appData.incidents[incidentId];
+  const nameEl = document.getElementById('inc-name-' + incidentId);
+  const iconEl = document.getElementById('inc-icon-' + incidentId);
+  const taglineEl = document.getElementById('inc-tagline-' + incidentId);
+  if (nameEl) inc.name = nameEl.value.trim() || inc.name;
+  if (iconEl) inc.icon = iconEl.value.trim() || inc.icon;
+  if (taglineEl) inc.tagline = taglineEl.value.trim();
+  saveData();
+  renderIncidentList();
+  renderAdminIncidentList();
+  // Update breadcrumb label
+  const bc = document.getElementById('admin-breadcrumb');
+  const active = bc.querySelector('.bc-item.active');
+  if (active) active.textContent = inc.name;
+  showToast('Incident name saved', 'success');
+}
+
+function adminAddIncident() {
+  const id = 'incident-' + Date.now();
+  appData.incidents[id] = {
+    id, name: 'New Incident Type', icon: '🚧', tagline: '',
+    definition: '', announcements: [], roles: [], contacts: []
+  };
+  saveData();
+  renderIncidentList();
+  renderAdminIncidentList();
+  adminNav('incident-sections', id);
+  showToast('New incident created', 'success');
+}
+
+// ─────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = type === 'success' ? '✓ ' + msg : msg;
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ─────────────────────────────────────────
+// CONFIRM MODAL
+// ─────────────────────────────────────────
+let pendingDeleteId = null;
+
+function confirmDeleteIncident(incidentId) {
+  const inc = appData.incidents[incidentId];
+  if (!inc) return;
+  pendingDeleteId = incidentId;
+  document.getElementById('modal-title').textContent = `Delete "${inc.name}"?`;
+  document.getElementById('modal-body').textContent = `You are about to permanently delete this incident type and all of its content.`;
+  document.getElementById('modal-warning').textContent = `All definitions, announcements, roles, and response actions for "${inc.name}" will be permanently deleted. This cannot be undone.`;
+  document.getElementById('modal-confirm-btn').onclick = executeDeleteIncident;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('confirm-modal').classList.remove('open');
+  pendingDeleteId = null;
+}
+
+function executeDeleteIncident() {
+  if (!pendingDeleteId) return;
+  const name = appData.incidents[pendingDeleteId]?.name || 'Incident';
+  delete appData.incidents[pendingDeleteId];
+  saveData();
+  renderIncidentList();
+  renderAdminIncidentList();
+  closeModal();
+  showToast(`"${name}" deleted`);
+}
+
+// ─────────────────────────────────────────
+// JSON EXPORT / IMPORT
+// ─────────────────────────────────────────
+function exportJSON() {
+  try {
+    const exportObj = {
+      _version: 2,
+      _exported: new Date().toISOString(),
+      buildingName: appData.buildingName,
+      incidents: appData.incidents,
+      sections: appData.sections || {}
+    };
+    const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    const ts = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = `all-hazard-plan-${ts}.json`;
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); document.body.removeChild(a); }, 1000);
+    showToast('JSON exported', 'success');
+  } catch(err) {
+    showToast('Export failed: ' + err.message);
+  }
+}
+
+function resetModalBtn() {
+  const btn = document.getElementById('modal-confirm-btn');
+  btn.textContent = 'Delete Permanently';
+  btn.onclick = executeDeleteIncident;
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    let parsed;
+    const raw = e.target.result;
+
+    // Parse JSON — show exact error if it fails
+    try {
+      parsed = JSON.parse(raw);
+    } catch(parseErr) {
+      alert('JSON parse error: ' + parseErr.message + '\n\nMake sure the file is a valid JSON export from this app.');
+      event.target.value = '';
+      return;
+    }
+
+    // Validate required structure
+    if (typeof parsed !== 'object' || parsed === null) {
+      alert('Import failed: file is not a JSON object.');
+      event.target.value = '';
+      return;
+    }
+    if (!parsed.incidents || typeof parsed.incidents !== 'object') {
+      alert('Import failed: no "incidents" key found in this file.\n\nOnly JSON files exported from this app can be imported.');
+      event.target.value = '';
+      return;
+    }
+
+    const incidentCount = Object.keys(parsed.incidents).length;
+
+    // Show confirmation modal
+    document.getElementById('modal-title').textContent = 'Import JSON?';
+    document.getElementById('modal-body').textContent = `"${file.name}" — ${incidentCount} incident type${incidentCount !== 1 ? 's' : ''}. This will replace all current app data.`;
+    document.getElementById('modal-warning').textContent = 'All current incidents, roles, actions, and section content will be overwritten. Export a backup first if needed.';
+    const btn = document.getElementById('modal-confirm-btn');
+    btn.textContent = 'Import & Overwrite';
+    btn.onclick = function() {
+      try {
+        appData.buildingName = parsed.buildingName || appData.buildingName;
+        appData.incidents    = parsed.incidents;
+        appData.sections     = parsed.sections || {};
+        if (appData.sections.bic === undefined) appData.sections.bic = JSON.parse(JSON.stringify(DEFAULT_DATA.sections.bic));
+        if (appData.sections.tenants === undefined) appData.sections.tenants = JSON.parse(JSON.stringify(DEFAULT_DATA.sections.tenants));
+        saveData();
+        renderIncidentList();
+        renderAdminIncidentList();
+        updatePlaceholderScreens();
+        if (appData.buildingName) {
+          document.getElementById('top-subtitle').textContent = appData.buildingName;
+          document.getElementById('home-building-sub').textContent = 'Fire & Life Safety — ' + appData.buildingName;
+        }
+        closeModal();
+        resetModalBtn();
+        adminNav('home');
+        showToast('Imported ' + incidentCount + ' incident type' + (incidentCount !== 1 ? 's' : ''), 'success');
+      } catch(err2) {
+        alert('Import apply error: ' + err2.message);
+        closeModal();
+        resetModalBtn();
+      }
+    };
+    document.getElementById('confirm-modal').classList.add('open');
+    event.target.value = '';
+  };
+
+  reader.onerror = function() {
+    alert('Could not read the file. Please try again.');
+    event.target.value = '';
+  };
+
+  reader.readAsText(file, 'UTF-8');
+}
+
+// ─────────────────────────────────────────
+// EMOJI PICKER
+// ─────────────────────────────────────────
+const EMOJI_GROUPS = [
+  {
+    label: 'Fire & Life Safety',
+    items: [
+      { icon: '🔥', label: 'Fire/Smoke' },
+      { icon: '🧯', label: 'Fire Extinguisher' },
+      { icon: '🚒', label: 'Fire Truck' },
+      { icon: '💨', label: 'Smoke' },
+      { icon: '🏚️', label: 'Structure Fire' },
+    ]
+  },
+  {
+    label: 'Medical & Safety',
+    items: [
+      { icon: '🚑', label: 'Medical' },
+      { icon: '🏥', label: 'Emergency' },
+      { icon: '💊', label: 'Medical Aid' },
+      { icon: '🩺', label: 'First Aid' },
+      { icon: '⛑️', label: 'Safety' },
+    ]
+  },
+  {
+    label: 'Security & Threats',
+    items: [
+      { icon: '🔫', label: 'Active Shooter' },
+      { icon: '💣', label: 'Bomb/Explosion' },
+      { icon: '🚨', label: 'Alert' },
+      { icon: '🔒', label: 'Security Breach' },
+      { icon: '🚔', label: 'Law Enforcement' },
+    ]
+  },
+  {
+    label: 'Hazardous Materials',
+    items: [
+      { icon: '☢️', label: 'Radiological' },
+      { icon: '☣️', label: 'Biological' },
+      { icon: '⚗️', label: 'Chemical' },
+      { icon: '🧪', label: 'Hazmat' },
+      { icon: '💀', label: 'Toxic' },
+    ]
+  },
+  {
+    label: 'Infrastructure',
+    items: [
+      { icon: '⚡', label: 'Power Outage' },
+      { icon: '💧', label: 'Water/Flooding' },
+      { icon: '🌊', label: 'Flood' },
+      { icon: '🔧', label: 'Mechanical' },
+      { icon: '🛗', label: 'Elevator' },
+    ]
+  },
+  {
+    label: 'Weather & Natural',
+    items: [
+      { icon: '🌪️', label: 'Severe Weather' },
+      { icon: '⛈️', label: 'Storm' },
+      { icon: '🌨️', label: 'Winter Storm' },
+      { icon: '🌡️', label: 'Extreme Heat' },
+      { icon: '🌧️', label: 'Heavy Rain' },
+    ]
+  },
+  {
+    label: 'Civil & Social',
+    items: [
+      { icon: '✉️', label: 'Suspicious Mail' },
+      { icon: '📦', label: 'Suspicious Package' },
+      { icon: '📢', label: 'Civil Disturbance' },
+      { icon: '🚶', label: 'Unsafe Individual' },
+      { icon: '🚧', label: 'General Incident' },
+    ]
+  }
+];
+
+let selectedEmoji = null;
+let emojiTargetIncidentId = null;
+
+function openEmojiPicker(incidentId) {
+  emojiTargetIncidentId = incidentId;
+  selectedEmoji = null;
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+  const customInput = document.getElementById('custom-emoji-input');
+  customInput.value = '';
+  // Build groups if not yet rendered
+  const groups = document.getElementById('emoji-groups');
+  if (!groups.children.length) {
+    groups.innerHTML = EMOJI_GROUPS.map(g => `
+      <div>
+        <div class="emoji-group-label">${g.label}</div>
+        <div class="emoji-grid">
+          ${g.items.map(item => `
+            <button class="emoji-btn" data-emoji="${item.icon}" onclick="selectEmoji(this,'${item.icon}')">
+              <div class="emoji-btn-icon">${item.icon}</div>
+              <div class="emoji-btn-label">${item.label}</div>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('emoji-modal').classList.add('open');
+}
+
+function selectEmoji(btn, emoji) {
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedEmoji = emoji;
+  document.getElementById('custom-emoji-input').value = '';
+}
+
+function previewCustomEmoji(input) {
+  if (input.value.trim()) {
+    document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+    selectedEmoji = input.value.trim();
+  }
+}
+
+function applyEmoji() {
+  const emoji = selectedEmoji || document.getElementById('custom-emoji-input').value.trim();
+  if (!emoji) { showToast('Select or type an emoji'); return; }
+  if (!emojiTargetIncidentId) return;
+  appData.incidents[emojiTargetIncidentId].icon = emoji;
+  saveData();
+  // Update the icon input field in the sections view
+  const iconInput = document.getElementById('inc-icon-' + emojiTargetIncidentId);
+  if (iconInput) iconInput.value = emoji;
+  renderAdminIncidentList();
+  renderIncidentList();
+  closeEmojiModal();
+  showToast('Icon updated', 'success');
+}
+
+function closeEmojiModal() {
+  document.getElementById('emoji-modal').classList.remove('open');
+}
+
+// ─────────────────────────────────────────
+// SIMPLE SECTION SAVES
+// ─────────────────────────────────────────
+function ensureSections() {
+  if (!appData.sections) appData.sections = {};
+}
+
+function saveSimpleSection(key, titleId, bodyId) {
+  ensureSections();
+  appData.sections[key] = {
+    title: document.getElementById(titleId)?.value.trim() || '',
+    body: document.getElementById(bodyId)?.value.trim() || ''
+  };
+  saveData();
+  updatePlaceholderScreens();
+  showToast('Saved', 'success');
+}
+
+function saveBuildingInfo() {
+  ensureSections();
+  appData.sections.buildingInfo = {
+    name: document.getElementById('set-bld-name').value.trim(),
+    address: document.getElementById('set-bld-address').value.trim(),
+    owner: document.getElementById('set-bld-owner').value.trim(),
+    notes: document.getElementById('set-bld-notes').value.trim()
+  };
+  saveData();
+  updatePlaceholderScreens();
+  showToast('Building info saved', 'success');
+}
+
+function saveAppSettings() {
+  const name = document.getElementById('set-app-building').value.trim();
+  if (name) {
+    appData.buildingName = name;
+    document.getElementById('top-subtitle').textContent = name;
+    document.getElementById('home-building-sub').textContent = `Fire & Life Safety — ${name}`;
+  }
+  saveData();
+  showToast('Settings saved', 'success');
+}
+
+function saveAdminPassword() {
+  const p1 = document.getElementById('set-new-pass').value;
+  const p2 = document.getElementById('set-confirm-pass').value;
+  if (!p1) { showToast('Enter a new password'); return; }
+  if (p1 !== p2) { showToast('Passwords do not match'); return; }
+  // Store hashed-ish in localStorage (demo — not cryptographic)
+  localStorage.setItem('ahp-admin-pass', p1);
+  document.getElementById('set-new-pass').value = '';
+  document.getElementById('set-confirm-pass').value = '';
+  showToast('Password updated', 'success');
+}
+
+// EAP Announcements (global, not per-incident)
+function renderEapAnnouncements() {
+  ensureSections();
+  if (!appData.sections.eapScripts) appData.sections.eapScripts = [];
+  const list = document.getElementById('admin-eap-list');
+  list.innerHTML = `<div class="info-box">These are global EAP announcement scripts shown on the "Announce the EAP" screen.</div>`;
+  appData.sections.eapScripts.forEach((script, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div class="announce-edit-title">Script ${i + 1}</div>
+        <button class="btn-danger" onclick="deleteEapScript(${i})">🗑 Delete</button>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Title</div>
+        <input class="form-input" id="eap-title-${i}" value="${script.title || ''}" style="padding:8px 10px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Announcement Script</div>
+        <textarea class="form-textarea" id="eap-body-${i}">${script.body || ''}</textarea>
+      </div>
+      <button class="btn-save" onclick="saveEapScript(${i})">Save</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function adminAddEapScript() {
+  ensureSections();
+  if (!appData.sections.eapScripts) appData.sections.eapScripts = [];
+  appData.sections.eapScripts.push({ title: 'New Announcement', body: '' });
+  saveData();
+  renderEapAnnouncements();
+  showToast('Script added', 'success');
+}
+
+function saveEapScript(i) {
+  appData.sections.eapScripts[i].title = document.getElementById(`eap-title-${i}`).value.trim();
+  appData.sections.eapScripts[i].body = document.getElementById(`eap-body-${i}`).value.trim();
+  saveData();
+  updatePlaceholderScreens();
+  showToast('Script saved', 'success');
+}
+
+function deleteEapScript(i) {
+  appData.sections.eapScripts.splice(i, 1);
+  saveData();
+  renderEapAnnouncements();
+  showToast('Script deleted');
+}
+
+// Floor Plans
+function renderFloorPlans() {
+  ensureSections();
+  if (!appData.sections.floorPlans) appData.sections.floorPlans = [];
+  const list = document.getElementById('admin-floorplan-list');
+  list.innerHTML = `<div class="info-box">Add floor plan entries. Use an image URL (hosted online) or add a description and notes for each floor.</div>`;
+  appData.sections.floorPlans.forEach((fp, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div class="announce-edit-title">Floor / Map ${i + 1}</div>
+        <button class="btn-danger" onclick="deleteFloorPlan(${i})">🗑 Delete</button>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Floor / Area Name</div>
+        <input class="form-input" id="fp-name-${i}" value="${fp.name || ''}" placeholder="e.g. Ground Floor Egress" style="padding:8px 10px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Image URL (optional)</div>
+        <input class="form-input" id="fp-url-${i}" value="${fp.url || ''}" placeholder="https://..." style="padding:8px 10px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Notes</div>
+        <textarea class="form-textarea" id="fp-notes-${i}" style="min-height:56px;" placeholder="e.g. Stairwells A & B, AED location, exits...">${fp.notes || ''}</textarea>
+      </div>
+      <button class="btn-save" onclick="saveFloorPlan(${i})">Save</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function adminAddFloorPlan() {
+  ensureSections();
+  if (!appData.sections.floorPlans) appData.sections.floorPlans = [];
+  appData.sections.floorPlans.push({ name: '', url: '', notes: '' });
+  saveData();
+  renderFloorPlans();
+  showToast('Floor plan entry added', 'success');
+}
+
+function saveFloorPlan(i) {
+  appData.sections.floorPlans[i].name = document.getElementById(`fp-name-${i}`).value.trim();
+  appData.sections.floorPlans[i].url = document.getElementById(`fp-url-${i}`).value.trim();
+  appData.sections.floorPlans[i].notes = document.getElementById(`fp-notes-${i}`).value.trim();
+  saveData();
+  updatePlaceholderScreens();
+  showToast('Floor plan saved', 'success');
+}
+
+function deleteFloorPlan(i) {
+  appData.sections.floorPlans.splice(i, 1);
+  saveData();
+  renderFloorPlans();
+  showToast('Entry deleted');
+}
+
+// Additional Resources
+function renderResources() {
+  ensureSections();
+  if (!appData.sections.resources) appData.sections.resources = [];
+  const list = document.getElementById('admin-resource-list');
+  list.innerHTML = `<div class="info-box">Add reference documents, links, and supplemental materials.</div>`;
+  appData.sections.resources.forEach((res, i) => {
+    const card = document.createElement('div');
+    card.className = 'announce-edit-card';
+    card.innerHTML = `
+      <div class="announce-edit-header">
+        <div class="announce-edit-title">Resource ${i + 1}</div>
+        <button class="btn-danger" onclick="deleteResource(${i})">🗑 Delete</button>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Title</div>
+        <input class="form-input" id="res-title-${i}" value="${res.title || ''}" placeholder="e.g. FDNY Emergency Guide" style="padding:8px 10px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">URL / Link (optional)</div>
+        <input class="form-input" id="res-url-${i}" value="${res.url || ''}" placeholder="https://..." style="padding:8px 10px;font-size:13px;"/>
+      </div>
+      <div class="edit-field">
+        <div class="edit-field-label">Description</div>
+        <textarea class="form-textarea" id="res-desc-${i}" style="min-height:56px;" placeholder="Brief description of this resource...">${res.desc || ''}</textarea>
+      </div>
+      <button class="btn-save" onclick="saveResource(${i})">Save</button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function adminAddResource() {
+  ensureSections();
+  if (!appData.sections.resources) appData.sections.resources = [];
+  appData.sections.resources.push({ title: '', url: '', desc: '' });
+  saveData();
+  renderResources();
+  showToast('Resource added', 'success');
+}
+
+function saveResource(i) {
+  appData.sections.resources[i].title = document.getElementById(`res-title-${i}`).value.trim();
+  appData.sections.resources[i].url = document.getElementById(`res-url-${i}`).value.trim();
+  appData.sections.resources[i].desc = document.getElementById(`res-desc-${i}`).value.trim();
+  saveData();
+  updatePlaceholderScreens();
+  showToast('Resource saved', 'success');
+}
+
+function deleteResource(i) {
+  appData.sections.resources.splice(i, 1);
+  saveData();
+  renderResources();
+  showToast('Resource deleted');
+}
+
+// Update user-facing placeholder screens with saved content
+// ─────────────────────────────────────────
+// REFERENCE DISPLAY HELPERS (BIC + Tenants)
+// ─────────────────────────────────────────
+function escHtml(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function telHref(s){ const m=String(s||'').match(/\+?1?[-.\s(]*\d{3}[-.\s)]*\d{3}[-.\s]*\d{4}/); return m ? m[0].replace(/\D/g,'') : String(s||'').replace(/\D/g,''); }
+function linkifyValue(s){
+  const phoneRe = /(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/g;
+  return escHtml(s).replace(phoneRe, m => {
+    const digits = m.replace(/\D/g,'');
+    return digits.length >= 10 ? `<a href="tel:${digits}">${m}</a>` : m;
+  });
+}
+function toggleRefGroup(el){ el.parentElement.classList.toggle('open'); }
+function toggleTenantCard(el){ el.parentElement.classList.toggle('open'); }
+
+function renderBICHtml(){
+  const bic = (appData.sections && appData.sections.bic) || null;
+  if (!bic || !(bic.groups && bic.groups.length)) return '';
+  const meta = `
+    <div class="ref-meta">
+      <div class="ref-meta-name">${escHtml(bic.aka || appData.buildingName || 'Building')}</div>
+      ${bic.address ? `<div class="ref-meta-line">📍 ${escHtml(bic.address)}</div>`:''}
+      ${bic.bin ? `<div class="ref-meta-line">BIN ${escHtml(bic.bin)}</div>`:''}
+      ${bic.revised ? `<div class="ref-meta-line">FDNY Building Information Card · revised ${escHtml(bic.revised)}</div>`:''}
+    </div>`;
+  const groups = (bic.groups||[]).map((g, gi) => `
+    <div class="ref-group${gi===0?' open':''}">
+      <div class="ref-group-head" onclick="toggleRefGroup(this)">
+        <div class="ref-group-title">${escHtml(g.title)}</div>
+        <div class="ref-group-chev">›</div>
+      </div>
+      <div class="ref-group-body">
+        ${(g.rows||[]).map(r => `
+          <div class="ref-row">
+            <div class="ref-row-label">${escHtml(r.label)}</div>
+            <div class="ref-row-value">${linkifyValue(r.value)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  return `<div style="width:100%;padding:0;text-align:left;">${meta}${groups}</div>`;
+}
+
+function tenantCardHtml(t){
+  const contacts = (t.contacts||[]).map(c => {
+    const label = c.name || c.title || 'Contact';
+    const sub = (c.name && c.title) ? c.title : '';
+    const lines = [];
+    if (c.office)    lines.push(`<a href="tel:${telHref(c.office)}">📞 ${escHtml(c.office)}</a>`);
+    if (c.emergency) lines.push(`<a class="emr" href="tel:${telHref(c.emergency)}">🚨 ${escHtml(c.emergency)}</a>`);
+    if (c.email)     lines.push(`<a class="eml" href="mailto:${escHtml(c.email)}">✉️ ${escHtml(c.email)}</a>`);
+    return `<div class="tcontact">
+        <div class="tcontact-name">${escHtml(label)}</div>
+        ${sub ? `<div class="tcontact-title">${escHtml(sub)}</div>`:''}
+        ${lines.length ? `<div class="tcontact-lines">${lines.join('')}</div>`:''}
+      </div>`;
+  }).join('');
+  return `<div class="tenant-card">
+      <div class="tenant-head" onclick="toggleTenantCard(this)">
+        <div style="flex:1;min-width:0;">
+          <div class="tenant-name">${escHtml(t.name)}</div>
+          ${t.store ? `<div class="tenant-store">${escHtml(t.store)}</div>`:''}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+          ${t.floors ? `<span class="tenant-floor">${escHtml(t.floors)}</span>`:''}
+          <span class="ref-group-chev">›</span>
+        </div>
+      </div>
+      <div class="tenant-body">${contacts || '<div class="contact-empty">No contacts listed.</div>'}</div>
+    </div>`;
+}
+
+function renderTenants(){
+  const cont = document.getElementById('tenant-list-container');
+  if (!cont) return;
+  const tenants = (appData.sections && appData.sections.tenants) || [];
+  const se = document.getElementById('tenant-search');
+  const q = (se ? se.value : '').trim().toLowerCase();
+  const match = t => {
+    if (!q) return true;
+    if ((t.name||'').toLowerCase().includes(q)) return true;
+    if ((t.floors||'').toLowerCase().includes(q)) return true;
+    return (t.contacts||[]).some(c => (c.name||'').toLowerCase().includes(q) || (c.title||'').toLowerCase().includes(q));
+  };
+  const filtered = tenants.filter(match);
+  if (filtered.length === 0){ cont.innerHTML = `<div class="incident-no-results">No tenants match “${escHtml(q)}”.</div>`; return; }
+  let html = '';
+  ['Office','Retail'].forEach(type => {
+    const group = filtered.filter(t => (t.type||'Office') === type);
+    if (!group.length) return;
+    html += `<div class="ref-section-head">${type}</div>` + group.map(tenantCardHtml).join('');
+  });
+  cont.innerHTML = html;
+}
+
+function updatePlaceholderScreens() {
+  const s = appData.sections || {};
+
+  // App Intro
+  const intro = s.intro;
+  const introScreen = document.getElementById('screen-app-intro');
+  if (intro && (intro.title || intro.body)) {
+    introScreen.querySelector('.placeholder-content').innerHTML = `
+      <div class="placeholder-icon">📱</div>
+      <div class="placeholder-title">${intro.title || 'App Introduction'}</div>
+      <div class="placeholder-text" style="white-space:pre-wrap;">${intro.body || ''}</div>
+    `;
+  }
+
+  // EAP Announcements
+  const eapScripts = s.eapScripts || [];
+  const eapScreen = document.getElementById('screen-announce-eap');
+  if (eapScripts.length > 0) {
+    eapScreen.querySelector('.placeholder-content').innerHTML = `
+      <div style="width:100%;padding:0 8px;display:flex;flex-direction:column;gap:10px;">
+        ${eapScripts.map(sc => `
+          <div class="announcement-box">
+            <div class="announcement-label">📣 ${sc.title}</div>
+            <div class="announcement-script">"${sc.body}"</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  // Building Info — structured BIC + any admin free-text notes
+  const bi = s.buildingInfo || {};
+  const biScreen = document.getElementById('screen-building-info');
+  const bicHtml = renderBICHtml();
+  const notesHtml = (bi.notes ? `<div style="font-size:13px;color:var(--gray-200);white-space:pre-wrap;margin:4px 0 12px;line-height:1.7;">${escHtml(bi.notes)}</div>` : '');
+  if (bicHtml || notesHtml) {
+    const pc = biScreen.querySelector('.placeholder-content');
+    pc.classList.add('filled');
+    pc.innerHTML =
+      `<div style="width:100%;padding:0 0 24px;text-align:left;">${notesHtml}${bicHtml}</div>`;
+  }
+
+  // Tenant Directory
+  renderTenants();
+
+  // Floor Plans
+  const fps = s.floorPlans || [];
+  const fpScreen = document.getElementById('screen-floor-plans');
+  if (fps.length > 0) {
+    fpScreen.querySelector('.placeholder-content').innerHTML = `
+      <div style="width:100%;padding:0 8px;display:flex;flex-direction:column;gap:10px;text-align:left;">
+        ${fps.map(fp => `
+          <div style="background:var(--navy-800);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-md);padding:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--white);">🗺️ ${fp.name || 'Floor Plan'}</div>
+            ${fp.notes ? `<div style="font-size:12px;color:var(--gray-400);margin-top:6px;line-height:1.6;">${fp.notes}</div>` : ''}
+            ${fp.url ? `<a href="${fp.url}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--gold-400);">View Map ↗</a>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  // Resources
+  const res = s.resources || [];
+  const resScreen = document.getElementById('screen-resources');
+  if (res.length > 0) {
+    resScreen.querySelector('.placeholder-content').innerHTML = `
+      <div style="width:100%;padding:0 8px;display:flex;flex-direction:column;gap:10px;text-align:left;">
+        ${res.map(r => `
+          <div style="background:var(--navy-800);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-md);padding:14px;">
+            <div style="font-size:13px;font-weight:700;color:var(--white);">📄 ${r.title || 'Resource'}</div>
+            ${r.desc ? `<div style="font-size:12px;color:var(--gray-400);margin-top:4px;line-height:1.6;">${r.desc}</div>` : ''}
+            ${r.url ? `<a href="${r.url}" target="_blank" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--gold-400);">Open Resource ↗</a>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+}
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  renderIncidentList();
+
+  // Building name
+  const bn = appData.buildingName || '5 Manhattan West';
+  document.getElementById('top-subtitle').textContent = bn;
+  document.getElementById('home-building-sub').textContent = `Fire & Life Safety — ${bn}`;
+
+  // Admin views — av-home starts active via HTML class, others hidden via CSS
+  updatePlaceholderScreens();
+});
+</script>
+</body>
+</html>
